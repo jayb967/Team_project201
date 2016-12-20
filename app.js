@@ -8,8 +8,11 @@ var initialNameEntered = false;
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 //DOM variables
-var userForm = document.getElementById('user-form');
-var playGame = document.getElementById('playGame');
+var userForm = document.getElementById('user-form'); //user name
+var playGame = document.getElementById('playGame');//want to play?
+var yesButton = document.getElementById('yesButton');//yes to play
+var noButton = document.getElementById('noButton');//no to play
+var wantToPlay = document.getElementById('yesLetsPlay');
 
 //Check UserName on Main Page for blanks
 function userHandler(event) {
@@ -18,8 +21,7 @@ function userHandler(event) {
   console.log(JSON.parse(localStorage.userName));
   userNamePopulated();
 }
-
-
+//Populate User Name
 function userNamePopulated() {
   if (localStorage.userName && initialNameEntered === false) {
     console.log('I have a value');
@@ -31,25 +33,33 @@ function userNamePopulated() {
   }
 }
 
-    //generate a yes and no button
+//Generate a yes and no button
 function displayYesNoButtons() {
-  //Yes button displayed
-  var newButton = document.createElement('BUTTON')
-  newButton.textContent = 'Yes';
+//Yes button displayed
+  var newButtonYes = document.createElement('BUTTON')
+  newButtonYes.textContent = 'Yes';
   console.log('in yes button clicked function');
-  yesButton.appendChild(newButton);
+  yesButton.appendChild(newButtonYes);
 //No button displayed
-  var newButton = document.createElement('BUTTON')
-  newButton.textContent = 'No';
-  console.log('in yes button clicked function');
-  yesButton.appendChild(newButton);
+  var newButtonNo = document.createElement('BUTTON')
+  newButtonNo.textContent = 'No';
+  console.log('in no button clicked function');
+  noButton.appendChild(newButtonNo);
 }
 
-
+function yesLetsPlay() {
+  var h3El = document.createElement('h3');
+  console.log('I am in yesLetsPlay');
+  h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
+  wantToPlay.appendChild(h3El);
+}
 
 //Event Listeners for Main Page
 userForm.addEventListener('submit', userHandler);
-//wantToPlay.addEventListener('click',name of function);
+//wantToPlay.addEventListener('click',yesLetsPlay);
+yesButton.addEventListener('click',yesLetsPlay);
+//noButton.addEventListener('click',noLetsNotPlay);
+//wantToPlay.addEventListener('click',yesLetsPlay);
 // startGame.addEventListener('click', name of function);
 // displayScore.addEventListener('click', name of function);
 
