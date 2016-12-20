@@ -12,7 +12,9 @@ var userForm = document.getElementById('user-form'); //user name
 var playGame = document.getElementById('playGame');//want to play?
 var yesButton = document.getElementById('yesButton');//yes to play
 var noButton = document.getElementById('noButton');//no to play
-var wantToPlay = document.getElementById('yesLetsPlay');
+var wantToPlay = document.getElementById('yesLetsPlay');//displays game instructions
+var startGame = document.getElementById('startGame');//starts Game timer begins
+var registerScore = document.getElementById('registerScore');//starts Game timer begins
 
 //Check UserName on Main Page for blanks
 function userHandler(event) {
@@ -47,21 +49,67 @@ function displayYesNoButtons() {
   noButton.appendChild(newButtonNo);
 }
 
+//provide game instructions, start button and call the timer function
 function yesLetsPlay() {
   var h3El = document.createElement('h3');
   console.log('I am in yesLetsPlay');
   h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
   wantToPlay.appendChild(h3El);
+//start button
+  var newButtonStartGame = document.createElement('BUTTON')
+  newButtonStartGame.textContent = 'Start Game';
+  console.log('in start game button clicked function');
+  startGame.appendChild(newButtonStartGame);
+}
+
+function noLetsNotPlay() {
+  console.log('I am in noLetsNotPlay');
+//need to hook into the Joke Page
+}
+
+function callTimer() {
+  console.log('we are in the timer fucntion');
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+//  this code can be modified to use as a time.   It currently starts on window.load
+  // var timer = {
+  //   interval: 0,
+  //   count: function() {
+  //     var t = setInterval(function() {
+  //       $('counter').innerHTML = timer.interval;
+  //       timer.interval++;
+  //     }, 1000);
+  //   }
+  // }
+  //
+  // window.onload = timer.count;
+  //
+  // function $(id) {
+  //   return document.getElementById(id);
+  // }
+}
+
+//This displays the register your score button and should only be called if the player is in the top ten??
+//otherwise we display the Play again button and the See Registered Scores??????
+function registerYourScore(){
+  var newButtonRegisterYourScore = document.createElement('BUTTON')
+  newButtonRegisterYourScore.textContent = 'RegisterYourScore';
+  console.log('in register your score button clicked function');
+  registerScore.appendChild(newButtonRegisterYourScore);
+}
+registerYourScore();
+
+function registerScorePage() {
+  console.log('I am in the register score page');
 }
 
 //Event Listeners for Main Page
 userForm.addEventListener('submit', userHandler);
-//wantToPlay.addEventListener('click',yesLetsPlay);
 yesButton.addEventListener('click',yesLetsPlay);
-//noButton.addEventListener('click',noLetsNotPlay);
-//wantToPlay.addEventListener('click',yesLetsPlay);
-// startGame.addEventListener('click', name of function);
-// displayScore.addEventListener('click', name of function);
+noButton.addEventListener('click',noLetsNotPlay);
+startGame.addEventListener('click',callTimer);
+registerScore.addEventListener('click',registerScorePage);
+
+
 
 // ////// DIS THE IMAGE OBJECT MON ///////
 // function Img(idNumber) {
@@ -139,22 +187,3 @@ yesButton.addEventListener('click',yesLetsPlay);
 // // we want to run after the time delay, and the value of the time delay itself - 5,000 milliseconds or 5 seconds.
 // //<input type="button" name="clickMe" value="Click me and wait!"
 // //onclick="setTimeout('alert(\'Surprise!\')', 5000)"/>
-
-// // +++++++++++++++++++++++++++++++++++++++++++++++++++++
-//this code can be modified to use as a time.   It currently starts on window.load
-// <div id="counter"></div>
-// var timer = {
-//     interval: 0,
-//     count: function() {
-//         var t = setInterval(function() {
-//             $('counter').innerHTML = timer.interval;
-//             timer.interval++;
-//         }, 1000);
-//     }
-// };
-//
-// window.onload = timer.count;
-//
-// function $(id) {
-//     return document.getElementById(id);
-// }
