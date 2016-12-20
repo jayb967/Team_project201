@@ -54,7 +54,6 @@ through the previous function.
 */
 
 function makeGameBoard() {
-  var gameBoard = document.getElementById('gameBoard');
   var trEl;
   var imgEl;
   var tcEl;
@@ -117,12 +116,22 @@ makeGameBoard();
     //
 
 
-// function playGameClickHandle(event) {
-//   event.preventDefault;
-//   //display the images for the game
-//     randomImages();
-//   // CLEAR THE BOARD
+
+// function playGameButton(event) {
+//    display the images for the game randomImages();
+//    start overral timer
+//    15 second timer for notification
 // }
+
+var gameBoard = document.getElementById('gameBoard');
+gameBoard.addEventListener('click', playGameClickHandle);
+function playGameClickHandle(event) {
+  event.preventDefault;
+  // determine the location of what got clicked
+    // Start timer for 15 seconds until next click [STRETCH]
+  // CLEAR THE BOARD
+  // display needs to change from cardback to
+}
 
 
 /*
