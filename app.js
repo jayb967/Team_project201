@@ -6,22 +6,23 @@ var boardLocation = [];
 var initialNameEntered = false;
 
 ////// DIS THE IMAGE OBJECT MON ///////
-function Img(idNumber) {
-  this.idNumber = idNumber;
-  this.filepath = 'img/' + this.idNumber + '.jpg';
+function Img(idString) {
+  this.idString = idString;
+  this.filepath = 'img/' + this.idString + '.jpg';
   this.boardLocation = -1;
   allPictures.push(this);
-  this.cardBack = 'img/card.png';
+  this.currentSide = 'img/card.png';
 }
 
 // All of our pic names are just numbers so we don't have to write out all of the individual pic IDS doppppeeeeeee
-function picIds() {
+function picIds(letter, start, end) {
   allPictures = [];
-  for (var i = 0; i < 8; i++) {
-    allPictures[i] = new Img(i);
+  for (var i = start; i < end; i++) {
+    allPictures[i] = new Img(letter + i);
   }
 }
-picIds();
+picIds('a', 0, 8);
+picIds('b', 9, 16);
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 //DOM variables
@@ -44,27 +45,37 @@ function rand() {
 }
 
 function randomImages () {
-  // assume the board is CLEAR
-  if (boardLocation === []) {
-    boardLocation.push(rand());
-  } else {
-    while (boardLocation.length < 16) {
-      var temp = rand();
-      // acount for duplicates within array, each location needs one duplicate
-      // but only one duplicate.
-      if (boardLocation.indexOf(temp) === boardLocation.lastIndexOf(temp)) {
-        boardLocation.push(temp);
-      }
+  do {
+    var temp = rand();
+    if (boardLocation.indexOf(temp) === boardLocation.lastIndexOf(temp)) {
+      boardLocation.push(temp);
+      allPictures[temp].boardLocation = boardLocation[boardLocation.length - 1];
     }
-  }
+  } while (boardLocation.length < 16);
 }
 randomImages();
+
+// assume the board is CLEAR
+// if (boardLocation === []) {
+//   boardLocation.push(rand());
+//   allPictures[].boardLocation
+// } else {
+//   while (boardLocation.length < 16) {
+//     var temp = rand();
+//     // acount for duplicates within array, each location needs one duplicate
+//     // but only one duplicate.
+//     if (boardLocation.indexOf(temp) === boardLocation.lastIndexOf(temp)) {
+//       boardLocation.push(temp);
+//     }
+//   }
+// }
 
 function putImagesOnBoard (tcEl, imgEl, trEl, gameBoard, i) {
   tcEl = trEl.insertCell(-1);
   imgEl = document.createElement('img');
-  imgEl.id = i;
-  imgEl.src = allPictures[boardLocation[i]].filepath;
+  imgEl.id = boardLocation[i];
+  // a;lskjfasdf = allPictures[boardLocation[i]];
+  imgEl.src = allPictures[boardLocation[i]].currentSide;
   tcEl.appendChild(imgEl);
   trEl.appendChild(tcEl);
   gameBoard.appendChild(trEl);
@@ -76,6 +87,7 @@ var imgEl;
 var tcEl;
 
 function makeGameBoard() {
+  console.log('this is in the make board game function');
   // var gameBoard = document.getElementById('gameBoard');
   // var trEl;
   // var imgEl;
@@ -113,14 +125,25 @@ document.getElementById('gameBoard').addEventListener('click', clickFlip);
 
 function clickFlip(event) {
   event.preventDefault();
-  // alert('gameBoard');
-  // alert(event.currentTarget.nodeName.id);
   alert(event.target.id);
-  // determine the location of what got clicked
+  allPictures[boardLocation[event.target.id]].currentSide = allPictures[boardLocation[event.target.id]].filepath;
+  // alert(allPictures[boardLocation[event.target.id]].currentSide);
+  gameBoard.innerHTML = '';
+  makeGameBoard();
     // Start timer for 15 seconds until next click [STRETCH]
   // CLEAR THE BOARD
   // display needs to change from cardback to
 }
+
+
+////////// LATERZ ////////////////////////////////
+// if (event.target.id === event.target.id) {
+//   // from Img.filepath === filepath
+// }
+//
+// if (event.target.id !== event.target.id) {
+//   // from Img.filepath === cardBack;
+// }
 
 
 
