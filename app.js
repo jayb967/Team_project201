@@ -52,21 +52,6 @@ function randomImages () {
 }
 randomImages();
 
-// assume the board is CLEAR
-// if (boardLocation === []) {
-//   boardLocation.push(rand());
-//   allPictures[].boardLocation
-// } else {
-//   while (boardLocation.length < 16) {
-//     var temp = rand();
-//     // acount for duplicates within array, each location needs one duplicate
-//     // but only one duplicate.
-//     if (boardLocation.indexOf(temp) === boardLocation.lastIndexOf(temp)) {
-//       boardLocation.push(temp);
-//     }
-//   }
-// }
-
 function putImagesOnBoard (tcEl, imgEl, trEl, gameBoard, i) {
   tcEl = trEl.insertCell(-1);
   imgEl = document.createElement('img');
@@ -100,23 +85,6 @@ function makeGameBoard() {
 }
 makeGameBoard();
 
-
-///// HOW TO SWITCH THE BLANK GAME BOARD TO THE GAME BOARD
-
-///////////////////////// RANDOM NOTES ///////////////////////////////////
-// WHEN THE GAME IS FINISHED
-    // You need to clear the game board if it says play again
-    //
-
-
-
-// function playGameButton(event) {
-//    display the images for the game randomImages();
-//    start overral timer
-//    15 second timer for notification
-// }
-
-// var table = document.getElementById('gameBoard');
 
 document.getElementById('gameBoard').addEventListener('click', clickFlip);
 
@@ -168,20 +136,6 @@ function clickFlip(event) {
   // display needs to change from cardback to
 }
 
-
-////////// LATERZ ////////////////////////////////
-// if (event.target.id === event.target.id) {
-//   // from Img.filepath === filepath
-// }
-//
-// if (event.target.id !== event.target.id) {
-//   // from Img.filepath === cardBack;
-// }
-
-
-
-
-
 /////////////////////////////////////////////////////////////////////////////////
 function userNamePopulated() {
   if (localStorage.userName && initialNameEntered === false) {
@@ -222,25 +176,7 @@ userForm.addEventListener('submit', userHandler);
 
 
 //////////////////// RANDOM NOTES //////////////////////////////////////
-// // so this could prove to be problematic in terms of efficiency in timing
-// /*
-// the previous function will only work with the right number of images
-// if we add more images to the image bank, selected the random 8 images
-// we will be using first, then run those pre-selected 8 and run them
-// through the previous function.
-// */
-//
-// // so this could prove to be problematic in terms of efficiency in timing
-//
-//
-// function playGameClickHandle(event) {
-//   event.preventDefault;
-//   //display the images for the game
-//   // CLEAR THE BOARD
-// }
-//
-//
-// /*
+
 // SO HERE'S WHAT I WANT. WRAP THE ENTIRE PLAY GAME IN A FUNCTION (PLAYGAME)
 // Then, return console.time(PLAYGAME);
 // Then, return console.timeEnd(PLAYGAME);
