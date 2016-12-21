@@ -24,7 +24,6 @@ var registerScore = document.getElementById('registerScore');//top ten player re
 var playAgain = document.getElementById('playAgain');//starts the game over
 var seeRegisteredScores = document.getElementById('seeRegisteredScores');//goes to the scores page
 
-
 //Check UserName on Main Page for blanks
 function userHandler(event) {
   //event.preventDefault();
@@ -161,11 +160,16 @@ function play(e) {
 
 //Populate User Name
 
+//Check UserName on Main Page for blanks
+function userHandler(event) {
+  event.preventDefault();
+  localStorage.userName = JSON.stringify(event.target.userName.value);
+  userNamePopulated();
+}
 
-function userNamePopulated(e) {
-  e.preventDefault();
+function userNamePopulated() {
   if (localStorage.userName && initialNameEntered === false) {
-    //console.log('I have a value');
+    alert('I have a value');
     var pEl = document.createElement('p');
     pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
     playGame.appendChild(pEl);
@@ -175,23 +179,21 @@ function userNamePopulated(e) {
 }
 
 //Generate a yes and no button
-function displayYesNoButtons(e) {
-  e.preventDefault();
+function displayYesNoButtons() {
 //Yes button displayed
-  var newButtonYes = document.createElement('BUTTON')
+  var newButtonYes = document.createElement('BUTTON');
   newButtonYes.textContent = 'Yes';
   //console.log('in yes button clicked function');
   yesButton.appendChild(newButtonYes);
 //No button displayed
-  var newButtonNo = document.createElement('BUTTON')
+  var newButtonNo = document.createElement('BUTTON');
   newButtonNo.textContent = 'No';
   //console.log('in no button clicked function');
   noButton.appendChild(newButtonNo);
 }
 
 //provide game instructions, start button and call the timer function
-function yesLetsPlay(e) {
-  e.preventDefault();
+function yesLetsPlay() {
   var h3El = document.createElement('h3');
   h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
   wantToPlay.appendChild(h3El);
@@ -202,9 +204,8 @@ function yesLetsPlay(e) {
 }
 
 //User doesn't want to play, they are transported to the Jokes page.
-function noLetsNotPlay(e) {
+function noLetsNotPlay() {
   console.log('I am in noLetsNotPlay');
-  e.preventDefault();
   document.location.href = 'jokes.html'; //this hooks into the Jokes Page
 }
 
@@ -257,7 +258,6 @@ function wantToPlayAgain() {//placeholder for calling the function that refreshe
   //display Play again button
   console.log('placeholder for calling the function to clear board and play again');
 }
-
 
 
 //Event Listeners for Main Page
