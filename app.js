@@ -2,11 +2,29 @@
 ////// GLOBAL VARIABLES BOI /////////
 var allPictures = [];
 var boardLocation = [];
+
+////// DIS THE IMAGE OBJECT MON ///////
+function Img(idNumber) {
+  this.idNumber = idNumber;
+  this.filepath = 'img/' + this.idNumber + '.jpg';
+  this.boardLocation = -1;
+  this.currentSide = 'img/card.png';
+  this.cardBack = 'img/card.png';
+}
+
+// All of our pic names are just numbers so we don't have to write out all of the individual pic IDS doppppeeeeeee
+function picIds() {
+  for (var i = 0; i < 8; i++) {
+    allPictures.push(new Img(i));
+  }
+}
+picIds();
+picIds();
+
 // var selectedImages = [];
 var initialNameEntered = false;
 var topTen = false;//used to determine if the Register Your Score button should be displayed
 var gameOver = true;//used to determine if Play Again? button should be displayed
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 //DOM variables
@@ -28,7 +46,112 @@ function userHandler(event) {
   //console.log(JSON.parse(localStorage.userName));
   userNamePopulated();
 }
+
+
+// running the random function 8 times to choose what
+function rand() {
+  return Math.floor(Math.random() * 16);
+}
+
+function randomImages () {
+  do {
+    var temp = rand();
+    if (boardLocation.indexOf(temp) === -1) {
+      boardLocation.push(temp);
+      allPictures[temp].boardLocation = boardLocation.length - 1;
+    }
+  } while (boardLocation.length < 16);
+}
+randomImages();
+
+function putImagesOnBoard (tcEl, imgEl, trEl, gameBoard, i) {
+  tcEl = trEl.insertCell(-1);
+  imgEl = document.createElement('img');
+  imgEl.id = i;
+  // a;lskjfasdf = allPictures[boardLocation[i]];
+  imgEl.src = allPictures[boardLocation[i]].currentSide;
+  tcEl.appendChild(imgEl);
+  trEl.appendChild(tcEl);
+  gameBoard.appendChild(trEl);
+}
+
+var gameBoard = document.getElementById('gameBoard');
+var trEl;
+var imgEl;
+var tcEl;
+
+function makeGameBoard() {
+  console.log('this is in the make board game function');
+  // var gameBoard = document.getElementById('gameBoard');
+  // var trEl;
+  // var imgEl;
+  // var tcEl;
+  for (var i = 0; i < boardLocation.length; i++) {
+    if (i % 4 === 0) {
+      trEl = document.createElement('tr');
+      putImagesOnBoard(tcEl, imgEl, trEl, gameBoard, i);
+    } else {
+      putImagesOnBoard(tcEl, imgEl, trEl, gameBoard, i);
+    }
+  }
+}
+makeGameBoard();
+
+
+document.getElementById('gameBoard').addEventListener('click', clickFlip);
+
+var clickStorage = [];
+
+function clickFlip(event) {
+  event.preventDefault();
+  var numId = parseInt(event.target.id);
+  // for two turns
+  if (clickStorage.length < 2) {
+    for (var i = 0; i < boardLocation.length; i++) {
+      if (numId === allPictures[i].boardLocation) {
+        allPictures[i].currentSide = allPictures[i].filepath;
+        clickStorage.push(i);
+
+      }
+    }
+  }
+  gameBoard.innerHTML = '';
+  makeGameBoard();
+
+  console.log('click storage ', clickStorage.length);
+
+  // function wait () {
+  //   alert('give them some time to look at the cards before flipping them over');
+  // }
+
+  if (clickStorage.length === 2) {
+    if (allPictures[clickStorage[0]].idNumber !== allPictures[clickStorage[1]].idNumber) {
+      allPictures[clickStorage[1]].currentSide = allPictures[0].cardBack;
+      allPictures[clickStorage[0]].currentSide = allPictures[0].cardBack;
+      // setTimeout(wait, 4000);
+      gameBoard.innerHTML = '';
+      makeGameBoard();
+    }
+    clickStorage = [];
+  }
+
+
+  // when click counter is 2, compare pictures
+  // if match, leave current side to pathfile
+  // if no match, return current sides to cardback
+
+
+
+
+    // Start timer for 15 seconds until next click [STRETCH]
+  // CLEAR THE BOARD
+  // display needs to change from cardback to
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
 //Populate User Name
+
 function userNamePopulated() {
   if (localStorage.userName && initialNameEntered === false) {
     //console.log('I have a value');
@@ -141,63 +264,13 @@ registerScore.addEventListener('click',registerScorePage);//topten
 seeRegisteredScores.addEventListener('click',registerScorePage);//non-top ten
 //playAgain.addEventListener('click',function that refreshes the game board);
 
-// ////// DIS THE IMAGE OBJECT MON ///////
-// function Img(idNumber) {
-//   this.idNumber = idNumber;
-//   this.filepath = '/img' + this.idNumber + '.jpg';
-//   this.boardLocation = -1;
-//   allPictures.push(this);
-// }
-//
-// // All of our pic names are just numbers so we don't have to write out all of the individual pic IDS doppppeeeeeee
-// function picIds() {
-//   for (var i = 0; i < 8; i++) {
-//     allPictures[i] = new Img[i];
-//   }
-// }
-// picIds();
-//
-// // random function
-// function rand() {
-//   return Math.floor(Math.random() * 8);
-// }
-//
-// // running the random function 8 times to choose what
-// function randomImages () {
-//   // assume the board is CLEAR
-//   if (boardLocation === []) {
-//     boardLocation.push(rand());
-//   } else {
-//     while (boardLocation.length < 8) {
-//       var temp = rand();
-//       // acount for duplicates within array, each location needs one duplicate
-//       // but only one duplicate.
-//       if (boardLocation.indexOf(temp) === boardLocation.lastIndexOf(temp)) {
-//         boardLocation.push(temp);
-//       }
-//     }
-//   }
-// }
-// randomImages();
-// // so this could prove to be problematic in terms of efficiency in timing
-// /*
-// the previous function will only work with the right number of images
-// if we add more images to the image bank, selected the random 8 images
-// we will be using first, then run those pre-selected 8 and run them
-// through the previous function.
-// */
-//
-// // so this could prove to be problematic in terms of efficiency in timing
-//
-//
-// function playGameClickHandle(event) {
-//   event.preventDefault;
-//   //display the images for the game
-//   // CLEAR THE BOARD
-// }
-//
-//
-// /*
+
+
+
+
+
+//////////////////// RANDOM NOTES //////////////////////////////////////
+
 // SO HERE'S WHAT I WANT. WRAP THE ENTIRE PLAY GAME IN A FUNCTION (PLAYGAME)
 // Then, return console.time(PLAYGAME);
 // Then, return console.timeEnd(PLAYGAME);
