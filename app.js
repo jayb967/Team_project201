@@ -9,6 +9,7 @@ function Img(idNumber) {
   this.filepath = 'img/' + this.idNumber + '.jpg';
   this.boardLocation = -1;
   this.currentSide = 'img/card.png';
+  this.cardBack = 'img/card.png';
 }
 
 // All of our pic names are just numbers so we don't have to write out all of the individual pic IDS doppppeeeeeee
@@ -119,19 +120,49 @@ makeGameBoard();
 
 document.getElementById('gameBoard').addEventListener('click', clickFlip);
 
+var clickStorage = [];
+
 function clickFlip(event) {
   event.preventDefault();
-  var numId = parseInt(event.target.id)
-  alert(numId);
+  var numId = parseInt(event.target.id);
+  // for two turns
+  if (clickStorage.length < 2) {
+    for (var i = 0; i < boardLocation.length; i++) {
+      if (numId === allPictures[i].boardLocation) {
+        allPictures[i].currentSide = allPictures[i].filepath;
+        clickStorage.push(i);
 
-  for (var i = 0; i < boardLocation.length; i++) {
-    if (numId === allPictures[i].boardLocation) {
-      allPictures[i].currentSide = allPictures[i].filepath;
+      }
     }
   }
-
   gameBoard.innerHTML = '';
   makeGameBoard();
+
+  console.log('click storage ', clickStorage.length);
+
+  // function wait () {
+  //   alert('give them some time to look at the cards before flipping them over');
+  // }
+
+  if (clickStorage.length === 2) {
+    if (allPictures[clickStorage[0]].idNumber !== allPictures[clickStorage[1]].idNumber) {
+      allPictures[clickStorage[1]].currentSide = allPictures[0].cardBack;
+      allPictures[clickStorage[0]].currentSide = allPictures[0].cardBack;
+      // setTimeout(wait, 4000);
+      gameBoard.innerHTML = '';
+      makeGameBoard();
+    }
+    clickStorage = [];
+  }
+
+
+  // when click counter is 2, compare pictures
+  // if match, leave current side to pathfile
+  // if no match, return current sides to cardback
+
+
+
+
     // Start timer for 15 seconds until next click [STRETCH]
   // CLEAR THE BOARD
   // display needs to change from cardback to
