@@ -4,6 +4,8 @@ var allPictures = [];
 var boardLocation = [];
 // var selectedImages = [];
 var initialNameEntered = false;
+var topTen = false;//used to determine if the Register Your Score button should be displayed
+var gameOver = true;//used to determine if Play Again? button should be displayed
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -13,20 +15,23 @@ var playGame = document.getElementById('playGame');//want to play?
 var yesButton = document.getElementById('yesButton');//yes to play
 var noButton = document.getElementById('noButton');//no to play
 var wantToPlay = document.getElementById('yesLetsPlay');//displays game instructions
-var startGame = document.getElementById('startGame');//starts Game timer begins
-var registerScore = document.getElementById('registerScore');//starts Game timer begins
+var startGame = document.getElementById('startGame');//starts Game & timer begins
+var registerScore = document.getElementById('registerScore');//top ten player registry
+var playAgain = document.getElementById('playAgain');//starts the game over
+var seeRegisteredScores = document.getElementById('seeRegisteredScores');//goes to the scores page
+
 
 //Check UserName on Main Page for blanks
 function userHandler(event) {
   event.preventDefault();
   localStorage.userName = JSON.stringify(event.target.userName.value);
-  console.log(JSON.parse(localStorage.userName));
+  //console.log(JSON.parse(localStorage.userName));
   userNamePopulated();
 }
 //Populate User Name
 function userNamePopulated() {
   if (localStorage.userName && initialNameEntered === false) {
-    console.log('I have a value');
+    //console.log('I have a value');
     var pEl = document.createElement('p');
     pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
     playGame.appendChild(pEl);
@@ -40,12 +45,12 @@ function displayYesNoButtons() {
 //Yes button displayed
   var newButtonYes = document.createElement('BUTTON')
   newButtonYes.textContent = 'Yes';
-  console.log('in yes button clicked function');
+  //console.log('in yes button clicked function');
   yesButton.appendChild(newButtonYes);
 //No button displayed
   var newButtonNo = document.createElement('BUTTON')
   newButtonNo.textContent = 'No';
-  console.log('in no button clicked function');
+  //console.log('in no button clicked function');
   noButton.appendChild(newButtonNo);
 }
 
@@ -62,44 +67,69 @@ function yesLetsPlay() {
   startGame.appendChild(newButtonStartGame);
 }
 
+//User doesn't want to play, they will be taken to the Jokes page.
 function noLetsNotPlay() {
   console.log('I am in noLetsNotPlay');
 //need to hook into the Joke Page
 }
 
+//This is for the overall elapsed time called when game is over
 function callTimer() {
-  console.log('we are in the timer fucntion');
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++
-//  this code can be modified to use as a time.   It currently starts on window.load
-  // var timer = {
-  //   interval: 0,
-  //   count: function() {
-  //     var t = setInterval(function() {
-  //       $('counter').innerHTML = timer.interval;
-  //       timer.interval++;
-  //     }, 1000);
-  //   }
-  // }
-  //
-  // window.onload = timer.count;
-  //
-  // function $(id) {
-  //   return document.getElementById(id);
-  // }
+  console.log('we are in the timer function');
+  var startingTimeInMs = Date.now(); //in milliseconds
+  // var endingTimeInMS = Date.now();
+  var timeCalc1 = (endingTimeInMS - startingTimeInMs);
+  console.log(timeCalc1);
+  var minutes = timeCalc1 / 60000; //There are 60,000 milliseconds in a minute.
+  var fintot = Math.round(minutes); //need to round-up
+  console.log(fintot);
 }
 
-//This displays the register your score button and should only be called if the player is in the top ten??
-//otherwise we display the Play again button and the See Registered Scores??????
+function clickMeAndWait() {
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// this code is to be used when we are waiting for the user to click on cards
+// When a visitor clicks the button, the setTimeout() method is called, passing in the expression that
+// we want to run after the time delay, and the value of the time delay itself - 5,000 milliseconds or 5 seconds.
+// <input type="button" name="clickMe" value="Click me and wait!"  put it in the html
+// onclick="setTimeout('alert(\'Surprise!\')', 5000)"/>  I can put this in an eventhandler for the players clicks between cards
+}
+
+//When the game is finished, for top ten winners, set topTen = true and gameOver or remove these variables and call this function.
+//this displays the register your score button, otherwise we display the See Registered Scores button
+//both top ten and non-top ten will see the Play again button
 function registerYourScore(){
-  var newButtonRegisterYourScore = document.createElement('BUTTON')
-  newButtonRegisterYourScore.textContent = 'RegisterYourScore';
-  console.log('in register your score button clicked function');
-  registerScore.appendChild(newButtonRegisterYourScore);
+  if (topTen && gameOver) {
+    var newButtonRegisterYourScore = document.createElement('BUTTON')
+    newButtonRegisterYourScore.textContent = 'Register Your Score?';
+    console.log('in register your score top ten');
+    registerScore.appendChild(newButtonRegisterYourScore);
+  }
+  else {
+    if (!topTen && gameOver) {//display See Registered Scores for those not in the top ten
+      var newButtonSeeRegisteredScores = document.createElement('BUTTON')
+      newButtonSeeRegisteredScores.textContent = 'See Registered Scores';
+      console.log('in see Registered Scores');
+      seeRegisteredScores.appendChild(newButtonSeeRegisteredScores);
+      wantToPlayAgain();
+    }
+  }
+  if (gameOver) {
+    var newButtonPlayAgain = document.createElement('BUTTON')
+    newButtonPlayAgain.textContent = 'Play Again?';
+    console.log('in play again button');
+    playAgain.appendChild(newButtonPlayAgain);
+    wantToPlayAgain();
+  }
 }
 registerYourScore();
 
-function registerScorePage() {
-  console.log('I am in the register score page');
+function registerScorePage() {//placeholder for calling the registerScorePage
+  console.log('placeholder for registerScorePage function');
+}
+
+function wantToPlayAgain() {//placeholder for calling the function that refreshes the gameboard
+  //display Play again button
+  console.log('placeholder for calling the function to clear board and play again');
 }
 
 //Event Listeners for Main Page
@@ -107,9 +137,9 @@ userForm.addEventListener('submit', userHandler);
 yesButton.addEventListener('click',yesLetsPlay);
 noButton.addEventListener('click',noLetsNotPlay);
 startGame.addEventListener('click',callTimer);
-registerScore.addEventListener('click',registerScorePage);
-
-
+registerScore.addEventListener('click',registerScorePage);//topten
+seeRegisteredScores.addEventListener('click',registerScorePage);//non-top ten
+//playAgain.addEventListener('click',function that refreshes the game board);
 
 // ////// DIS THE IMAGE OBJECT MON ///////
 // function Img(idNumber) {
@@ -181,9 +211,3 @@ registerScore.addEventListener('click',registerScorePage);
 // // local storage shit
 // // recording the names, top 10 times on that machine
 //
-// // +++++++++++++++++++++++++++++++++++++++++++++++++++++
-// //this code is to be used when we are waiting for the user to click on cards
-// //When a visitor clicks the button, the setTimeout() method is called, passing in the expression that
-// // we want to run after the time delay, and the value of the time delay itself - 5,000 milliseconds or 5 seconds.
-// //<input type="button" name="clickMe" value="Click me and wait!"
-// //onclick="setTimeout('alert(\'Surprise!\')', 5000)"/>
