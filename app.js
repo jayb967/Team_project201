@@ -162,7 +162,6 @@ function userHandler(event) {
 
 function userNamePopulated() {
   if (localStorage.userName && initialNameEntered === false) {
-    alert('I have a value');
     var pEl = document.createElement('p');
     pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
     playGame.appendChild(pEl);
