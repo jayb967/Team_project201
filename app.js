@@ -2,27 +2,23 @@
 ////// GLOBAL VARIABLES BOI /////////
 var allPictures = [];
 var boardLocation = [];
-// var selectedImages = [];
-var initialNameEntered = false;
 
 ////// DIS THE IMAGE OBJECT MON ///////
-function Img(idString) {
-  this.idString = idString;
-  this.filepath = 'img/' + this.idString + '.jpg';
+function Img(idNumber) {
+  this.idNumber = idNumber;
+  this.filepath = 'img/' + this.idNumber + '.jpg';
   this.boardLocation = -1;
-  allPictures.push(this);
   this.currentSide = 'img/card.png';
 }
 
 // All of our pic names are just numbers so we don't have to write out all of the individual pic IDS doppppeeeeeee
-function picIds(letter, start, end) {
-  allPictures = [];
-  for (var i = start; i < end; i++) {
-    allPictures[i] = new Img(letter + i);
+function picIds() {
+  for (var i = 0; i < 8; i++) {
+    allPictures.push(new Img(i));
   }
 }
-picIds('a', 0, 8);
-picIds('b', 9, 16);
+picIds();
+picIds();
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 //DOM variables
@@ -41,15 +37,15 @@ function userHandler(event) {
 
 // running the random function 8 times to choose what
 function rand() {
-  return Math.floor(Math.random() * 8);
+  return Math.floor(Math.random() * 16);
 }
 
 function randomImages () {
   do {
     var temp = rand();
-    if (boardLocation.indexOf(temp) === boardLocation.lastIndexOf(temp)) {
+    if (boardLocation.indexOf(temp) === -1) {
       boardLocation.push(temp);
-      allPictures[temp].boardLocation = boardLocation[boardLocation.length - 1];
+      allPictures[temp].boardLocation = boardLocation.length - 1;
     }
   } while (boardLocation.length < 16);
 }
@@ -73,7 +69,7 @@ randomImages();
 function putImagesOnBoard (tcEl, imgEl, trEl, gameBoard, i) {
   tcEl = trEl.insertCell(-1);
   imgEl = document.createElement('img');
-  imgEl.id = boardLocation[i];
+  imgEl.id = i;
   // a;lskjfasdf = allPictures[boardLocation[i]];
   imgEl.src = allPictures[boardLocation[i]].currentSide;
   tcEl.appendChild(imgEl);
@@ -125,9 +121,15 @@ document.getElementById('gameBoard').addEventListener('click', clickFlip);
 
 function clickFlip(event) {
   event.preventDefault();
-  alert(event.target.id);
-  allPictures[boardLocation[event.target.id]].currentSide = allPictures[boardLocation[event.target.id]].filepath;
-  // alert(allPictures[boardLocation[event.target.id]].currentSide);
+  var numId = parseInt(event.target.id)
+  alert(numId);
+
+  for (var i = 0; i < boardLocation.length; i++) {
+    if (numId === allPictures[i].boardLocation) {
+      allPictures[i].currentSide = allPictures[i].filepath;
+    }
+  }
+
   gameBoard.innerHTML = '';
   makeGameBoard();
     // Start timer for 15 seconds until next click [STRETCH]
