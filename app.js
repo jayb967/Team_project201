@@ -262,12 +262,6 @@ startGame.addEventListener('click', play);
 registerScore.addEventListener('click',registerScorePage);//topten
 seeRegisteredScores.addEventListener('click',registerScorePage);//non-top ten
 //playAgain.addEventListener('click',function that refreshes the game board);
-<<<<<<< HEAD
-
-
-
-
-
 
 //////////////////// RANDOM NOTES //////////////////////////////////////
 
@@ -328,6 +322,5 @@ console.log(topScoreCheck());
 //     displayYesNoButtons();
 //   }
 // }
-=======
+
 gameBoard.addEventListener('click', clickFlip);
->>>>>>> master
