@@ -160,7 +160,10 @@ function play(e) {
 /////////////////////////////////////////////////////////////////////////////////
 
 //Populate User Name
-function userNamePopulated() {
+
+
+function userNamePopulated(e) {
+  e.preventDefault();
   if (localStorage.userName && initialNameEntered === false) {
     //console.log('I have a value');
     var pEl = document.createElement('p');
@@ -172,7 +175,8 @@ function userNamePopulated() {
 }
 
 //Generate a yes and no button
-function displayYesNoButtons() {
+function displayYesNoButtons(e) {
+  e.preventDefault();
 //Yes button displayed
   var newButtonYes = document.createElement('BUTTON')
   newButtonYes.textContent = 'Yes';
@@ -186,7 +190,8 @@ function displayYesNoButtons() {
 }
 
 //provide game instructions, start button and call the timer function
-function yesLetsPlay() {
+function yesLetsPlay(e) {
+  e.preventDefault();
   var h3El = document.createElement('h3');
   h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
   wantToPlay.appendChild(h3El);
@@ -196,10 +201,11 @@ function yesLetsPlay() {
   startGame.appendChild(newButtonStartGame);
 }
 
-//User doesn't want to play, they will be taken to the Jokes page.
-function noLetsNotPlay() {
+//User doesn't want to play, they are transported to the Jokes page.
+function noLetsNotPlay(e) {
   console.log('I am in noLetsNotPlay');
-//need to hook into the Joke Page
+  e.preventDefault();
+  document.location.href = 'jokes.html'; //this hooks into the Jokes Page
 }
 
 //This is for the overall elapsed time called when game is over
