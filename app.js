@@ -24,6 +24,13 @@ var registerScore = document.getElementById('registerScore');//top ten player re
 var playAgain = document.getElementById('playAgain');//starts the game over
 var seeRegisteredScores = document.getElementById('seeRegisteredScores');//goes to the scores page
 
+//Check UserName on Main Page for blanks
+function userHandler(event) {
+  //event.preventDefault();
+  localStorage.userName = JSON.stringify(event.target.userName.value);
+  userNamePopulated();
+}
+
 function Img(idNumber) {
   this.idNumber = idNumber;
   this.filepath = 'img/' + this.idNumber + '.png';
@@ -280,7 +287,6 @@ function wantToPlayAgain() {//placeholder for calling the function that refreshe
 }
 
 
-
 //Event Listeners for Main Page
 userForm.addEventListener('submit', userHandler);
 yesButton.addEventListener('click',yesLetsPlay);
@@ -289,6 +295,5 @@ startGame.addEventListener('click', play);
 registerScore.addEventListener('click',registerScorePage);//topten
 seeRegisteredScores.addEventListener('click',registerScorePage);//non-top ten
 //playAgain.addEventListener('click',function that refreshes the game board);
-
 
 gameBoard.addEventListener('click', clickFlip);
