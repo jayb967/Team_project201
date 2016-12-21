@@ -53,7 +53,6 @@ function randomImages () {
   } while (boardLocation.length < 16);
 }
 
-
 function putImagesOnBoard (tcEl, imgEl, trEl, gameBoard, i) {
   tcEl = trEl.insertCell(-1);
   imgEl = document.createElement('img');
@@ -77,7 +76,6 @@ function makeGameBoard() {
     }
   }
 }
-
 
 ////////////////// VARIABLES USED FOR THE GAME CLICK FUNCTION /////////////////
 
@@ -106,7 +104,6 @@ function endOfRound() {
   }
 }
 
-
 ///////////////////////// FUNCTION FOR GAME ///////////////////////////
 function clickFlip(event) {
   event.preventDefault();
@@ -131,24 +128,63 @@ function clickFlip(event) {
 function endGame() {
   var endingTimeInMS = Date.now();
   var timeCalc = (endingTimeInMS - startingTimeInMs) / 60000;
-  var timeSeconds = Math.round(Math.floor(timeCalc * 100)); //need to round-up
-  alert('Congratulations! You finished in ' + timeSeconds + ' seconds.');
+  localStorage.newScore = JSON.stringify(Math.round(Math.floor(timeCalc * 100))); //need to round-up
   gameBoard.innerHTML = '';
   startGame.innerHTML = '';
   wantToPlay.innerHTML = '';
+  checkScores();
   playAgainButton();
   registerYourScore();
 }
 
 function play(e) {
   e.preventDefault();
+  allPictures = [];
   picIds();
   picIds();
   randomImages();
   makeGameBoard();
   initializeMatchLocation();
   startingTimeInMs = Date.now();
+
 }
+
+function checkScores() {
+  var isHighScore = false;
+  var highScores = [];
+  // var temphighScores = [];
+  var newScore = parseInt(JSON.parse(localStorage.getItem('newScore')));
+  function orderScores() {
+    highScores.sort(function(a, b){return a-b});
+  }
+  if (localStorage.highScores) {
+    // temphighScores.push(JSON.stringify(localStorage.highScores));
+    //  tempAppearances = JSON.parse(localStorage.getItem('totalAppearances'));
+    // highScores = temphighScores.map(Number);
+    highScores = JSON.parse(localStorage.getItem('highScores'));
+    for (var i = 0; i < highScores.length; i++) {
+      if (parseInt(highScores[i]) < newScore) {
+        isHighScore = true;
+      }
+    }
+    if (!isHighScore && i < highScores.length) {
+      isHighScore = true;
+    }
+    if (isHighScore) {
+      highScores.push(newScore);
+      if (highScores.length > 10) {
+        highScores.pop();
+      }
+      orderScores();
+      console.log('high scores after sort' , highScores);
+    }
+  } else {
+    highScores.push(newScore);
+  }
+  localStorage.newScore = '';
+  localStorage.highScores = JSON.stringify(highScores);
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 
 //Populate User Name
@@ -175,12 +211,10 @@ function displayYesNoButtons() {
 //Yes button displayed
   var newButtonYes = document.createElement('BUTTON');
   newButtonYes.textContent = 'Yes';
-  //console.log('in yes button clicked function');
   yesButton.appendChild(newButtonYes);
 //No button displayed
   var newButtonNo = document.createElement('BUTTON');
   newButtonNo.textContent = 'No';
-  //console.log('in no button clicked function');
   noButton.appendChild(newButtonNo);
 }
 
@@ -197,7 +231,6 @@ function yesLetsPlay() {
 
 //User doesn't want to play, they are transported to the Jokes page.
 function noLetsNotPlay() {
-  console.log('I am in noLetsNotPlay');
   document.location.href = 'jokes.html'; //this hooks into the Jokes Page
 }
 
@@ -220,14 +253,12 @@ function registerYourScore(){
   if (topTen) {
     var newButtonRegisterYourScore = document.createElement('BUTTON')
     newButtonRegisterYourScore.textContent = 'Register Your Score?';
-    console.log('in register your score top ten');
     registerScore.appendChild(newButtonRegisterYourScore);
   }
   else {
     if (!topTen) {//display See Registered Scores for those not in the top ten
       var newButtonSeeRegisteredScores = document.createElement('BUTTON')
       newButtonSeeRegisteredScores.textContent = 'See Registered Scores';
-      console.log('in see Registered Scores');
       seeRegisteredScores.appendChild(newButtonSeeRegisteredScores);
       wantToPlayAgain();
     }
@@ -237,18 +268,15 @@ function registerYourScore(){
 function playAgainButton() {
   var newButtonPlayAgain = document.createElement('BUTTON')
   newButtonPlayAgain.textContent = 'Play Again?';
-  console.log('in play again button');
   playAgain.appendChild(newButtonPlayAgain);
   wantToPlayAgain();
 }
 
 function registerScorePage() {//placeholder for calling the registerScorePage
-  console.log('placeholder for registerScorePage function');
 }
 
 function wantToPlayAgain() {//placeholder for calling the function that refreshes the gameboard
   //display Play again button
-  console.log('placeholder for calling the function to clear board and play again');
 }
 
 
