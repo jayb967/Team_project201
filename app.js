@@ -25,7 +25,6 @@ var playAgain = document.getElementById('playAgain');//starts the game over
 var seeRegisteredScores = document.getElementById('seeRegisteredScores');//goes to the scores page
 
 
-
 function Img(idNumber) {
   this.idNumber = idNumber;
   this.filepath = 'img/' + this.idNumber + '.png';
@@ -162,12 +161,17 @@ function userHandler(event) {
   userNamePopulated();
 }
 
+
+//Check UserName on Main Page for blanks
+function userHandler(event) {
+  event.preventDefault();
+  localStorage.userName = JSON.stringify(event.target.userName.value);
+  userNamePopulated();
+}
+
 function userNamePopulated() {
-  // e.preventDefault();
-  alert('Im in userName Populated');
-  console.log(localStorage.userName);
   if (localStorage.userName && initialNameEntered === false) {
-    //console.log('I have a value');
+    alert('I have a value');
     var pEl = document.createElement('p');
     pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
     playGame.appendChild(pEl);
@@ -178,14 +182,13 @@ function userNamePopulated() {
 
 //Generate a yes and no button
 function displayYesNoButtons() {
-// e.preventDefault();
 //Yes button displayed
-  var newButtonYes = document.createElement('BUTTON')
+  var newButtonYes = document.createElement('BUTTON');
   newButtonYes.textContent = 'Yes';
   //console.log('in yes button clicked function');
   yesButton.appendChild(newButtonYes);
 //No button displayed
-  var newButtonNo = document.createElement('BUTTON')
+  var newButtonNo = document.createElement('BUTTON');
   newButtonNo.textContent = 'No';
   //console.log('in no button clicked function');
   noButton.appendChild(newButtonNo);
@@ -193,7 +196,6 @@ function displayYesNoButtons() {
 
 //provide game instructions, start button and call the timer function
 function yesLetsPlay() {
-  // e.preventDefault();
   var h3El = document.createElement('h3');
   h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
   wantToPlay.appendChild(h3El);
@@ -206,7 +208,6 @@ function yesLetsPlay() {
 //User doesn't want to play, they are transported to the Jokes page.
 function noLetsNotPlay() {
   console.log('I am in noLetsNotPlay');
-  // e.preventDefault();
   document.location.href = 'jokes.html'; //this hooks into the Jokes Page
 }
 
@@ -275,27 +276,5 @@ registerScore.addEventListener('click',registerScorePage);//topten
 seeRegisteredScores.addEventListener('click',registerScorePage);//non-top ten
 //playAgain.addEventListener('click',function that refreshes the game board);
 
-// /////// YANA TABLE FUNCTION
-// function putImagesOnBoard (tcEl, imgEl, trEl, gameBoard, i) {
-//   tcEl = trEl.insertCell(-1);
-//   imgEl = document.createElement('img');
-//   imgEl.id = i;
-//   // a;lskjfasdf = allPictures[boardLocation[i]];
-//   imgEl.src = allPictures[boardLocation[i]].currentSide;
-//   tcEl.appendChild(imgEl);
-//   trEl.appendChild(tcEl);
-//   gameBoard.appendChild(trEl);
-// }
-// ///// ROSE ANNE LOCAL STORAGE FUNCTION
-// function userNamePopulated() {
-//   if (localStorage.userName && initialNameEntered === false) {
-//     //console.log('I have a value');
-//     var pEl = document.createElement('p');
-//     pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
-//     playGame.appendChild(pEl);
-//     initialNameEntered = true;
-//     displayYesNoButtons();
-//   }
-// }
 
 gameBoard.addEventListener('click', clickFlip);
