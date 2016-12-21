@@ -23,13 +23,58 @@ li {
   font-size: 24px;
   border-radius: 8px;
   border: none;
-  color: #e3e3e3;
-  background-color: red;
+  color: black;
+  background-color: white;
   padding: 10px 15px;
   margin-left: 475px;
   margin-bottom: 30px;
   cursor: pointer;
   float: none;
+}
+#display-button2 {
+  font-family: sans-serif;
+  font-weight: bolder;
+  /*margin-bottom: 10px*/
+  font-size: 20px;
+  border-radius: 20px;
+  border: none;
+  color: black;
+  /*background: #888;*/
+  background-color: white;
+  padding: 10px 15px;
+  /*margin: 50%*/
+  margin-left: 40%;
+  margin-right: 40%;
+  margin-top: 200px;
+  /*margin-bottom: 30px;*/
+  cursor: pointer;
+  float: none;
+}
+
+#ready-to-play {
+  font-family: sans-serif;
+  font-weight: bolder;
+  /*margin-bottom: 50px*/
+  font-size: 20px;
+  border-radius: 20px;
+  border: none;
+  color: black;
+  /*background: #888;*/
+  background-color: #B33E3E;
+  padding: 10px 15px;
+  margin-top: 10%;
+  margin-left: 70%;
+  margin-bottom: 30px;
+  cursor: pointer;
+  float: none;
+}
+#ready-to-play:hover {
+  background: #888;
+  color:black;
+}
+#display-button2:hover {
+  background: #888;
+  color:black;
 }
 button:hover {
   background: #888;
@@ -39,7 +84,13 @@ button:hover {
   margin-left: auto;
   margin-right: auto;
 }
-
+h2 #click-again-text{
+  text-align: center;
+  font-size: 30px;
+}
+#jokes {
+  text-align: center;
+}
 img {
   height: 150px;
   width: 150px;
