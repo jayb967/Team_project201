@@ -25,12 +25,6 @@ var playAgain = document.getElementById('playAgain');//starts the game over
 var seeRegisteredScores = document.getElementById('seeRegisteredScores');//goes to the scores page
 
 
-//Check UserName on Main Page for blanks
-function userHandler(event) {
-  event.preventDefault();
-  localStorage.userName = JSON.stringify(event.target.userName.value);
-  userNamePopulated();
-}
 
 function Img(idNumber) {
   this.idNumber = idNumber;
@@ -160,10 +154,18 @@ function play(e) {
 /////////////////////////////////////////////////////////////////////////////////
 
 //Populate User Name
+//Check UserName on Main Page for blanks
+function userHandler(event) {
+  alert('Im in userHandler');
+  event.preventDefault();
+  localStorage.userName = JSON.stringify(event.target.userName.value);
+  userNamePopulated();
+}
 
-
-function userNamePopulated(e) {
-  e.preventDefault();
+function userNamePopulated() {
+  // e.preventDefault();
+  alert('Im in userName Populated');
+  console.log(localStorage.userName);
   if (localStorage.userName && initialNameEntered === false) {
     //console.log('I have a value');
     var pEl = document.createElement('p');
@@ -175,8 +177,8 @@ function userNamePopulated(e) {
 }
 
 //Generate a yes and no button
-function displayYesNoButtons(e) {
-  e.preventDefault();
+function displayYesNoButtons() {
+// e.preventDefault();
 //Yes button displayed
   var newButtonYes = document.createElement('BUTTON')
   newButtonYes.textContent = 'Yes';
@@ -190,8 +192,8 @@ function displayYesNoButtons(e) {
 }
 
 //provide game instructions, start button and call the timer function
-function yesLetsPlay(e) {
-  e.preventDefault();
+function yesLetsPlay() {
+  // e.preventDefault();
   var h3El = document.createElement('h3');
   h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
   wantToPlay.appendChild(h3El);
@@ -202,9 +204,9 @@ function yesLetsPlay(e) {
 }
 
 //User doesn't want to play, they are transported to the Jokes page.
-function noLetsNotPlay(e) {
+function noLetsNotPlay() {
   console.log('I am in noLetsNotPlay');
-  e.preventDefault();
+  // e.preventDefault();
   document.location.href = 'jokes.html'; //this hooks into the Jokes Page
 }
 
@@ -224,6 +226,7 @@ function noLetsNotPlay(e) {
 //this displays the register your score button, otherwise we display the See Registered Scores button
 //both top ten and non-top ten will see the Play again button
 function registerYourScore(){
+  // e.preventDefault();
   if (topTen) {
     var newButtonRegisterYourScore = document.createElement('BUTTON')
     newButtonRegisterYourScore.textContent = 'Register Your Score?';
@@ -242,6 +245,7 @@ function registerYourScore(){
 }
 
 function playAgainButton() {
+  // e.preventDefault();
   var newButtonPlayAgain = document.createElement('BUTTON')
   newButtonPlayAgain.textContent = 'Play Again?';
   console.log('in play again button');
@@ -250,11 +254,13 @@ function playAgainButton() {
 }
 
 function registerScorePage() {//placeholder for calling the registerScorePage
+  // e.preventDefault();
   console.log('placeholder for registerScorePage function');
 }
 
 function wantToPlayAgain() {//placeholder for calling the function that refreshes the gameboard
   //display Play again button
+  // e.preventDefault();
   console.log('placeholder for calling the function to clear board and play again');
 }
 
@@ -268,43 +274,6 @@ startGame.addEventListener('click', play);
 registerScore.addEventListener('click',registerScorePage);//topten
 seeRegisteredScores.addEventListener('click',registerScorePage);//non-top ten
 //playAgain.addEventListener('click',function that refreshes the game board);
-
-//////////////////// RANDOM NOTES //////////////////////////////////////
-
-
-////////////////////////////////////////////////////////////////////////////////
-//global DOM variables
-// var tableScores = document.getElementById('topScores');
-// var topRowEl;
-// var topCellEl;
-//
-// function topScoresOnBoard(tableScores, topRowEl, topCellEl) {
-//   var topRowEl = document.createElement('tr');
-//   var topCellEl = trEl.insertCell(-1);
-//   topCellEl.id = //// so this shit would be from local storage
-//   topCellEl.appendChild(topRowEl);
-//   tableScores.appendChild(topRowEl);
-// }
-//
-localStorage.userName = 'Bob';
-localStorage.newHighScore = 127;
-localStorage.highScores = '[123, 124, 125, 126, 128]';
-//localStorage.setItem('highScores', localStorage.highScores);
-
-// FIRST RETURN FROM THE LOCAL storage
-
-// SIMPLY THE LOCAL STORAGE STUFF
-var parsedHighScores = JSON.parse(localStorage.highScores);
-console.log(parsedHighScores);
-
-function topScoreCheck() {}
-for (var k = 0; k < localStorage.highScores.length; k++) {
-  if (localStorage.newHighScore > localStorage.highScores[k]) {
-    parsedHighScores.pop();
-    localStorage.highScores[k] = localStorage.newHighScore;
-  }
-}
-console.log(topScoreCheck());
 
 // /////// YANA TABLE FUNCTION
 // function putImagesOnBoard (tcEl, imgEl, trEl, gameBoard, i) {
