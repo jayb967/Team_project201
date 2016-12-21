@@ -1,3 +1,40 @@
+* {
+  font-family:sans-serif;
+  background-color: #96C0CE;
+  color: #525564;
+  /*border:2px solid green;*/
+}
+
+h1 {
+  text-align:center;
+  font-weight: bolder;
+  font-size: 30px;
+  padding
+   }
+
+li {
+  display: inline-block;
+  list-style-type: none;
+  padding:2px;
+  text-align:center;
+}
+#display-button {
+  margin-bottom: 50px
+  font-size: 24px;
+  border-radius: 8px;
+  border: none;
+  color: #e3e3e3;
+  background-color: red;
+  padding: 10px 15px;
+  margin-left: 475px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  float: none;
+}
+button:hover {
+  background: #888;
+  color:red;
+
 #gameBoard {
   margin-left: auto;
   margin-right: auto;
