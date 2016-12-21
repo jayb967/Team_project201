@@ -97,55 +97,65 @@ function makeGameBoard() {
 }
 makeGameBoard();
 
-
+////////////////// VARIABLES USED FOR THE GAME CLICK FUNCTION /////////////////
 document.getElementById('gameBoard').addEventListener('click', clickFlip);
 
+var matchLocation = [];
+for (var i = 0; i < boardLocation.length; i++) {
+  matchLocation.push(false);
+}
 var clickStorage = [];
+function wait () {
+  gameBoard.innerHTML = '';
+  makeGameBoard();
+  alert('give them some time to look at the cards before flipping them over');
+}
 
+///////////////////////// FUNCTION FOR GAME ///////////////////////////
 function clickFlip(event) {
   event.preventDefault();
   var numId = parseInt(event.target.id);
-  // for two turns
-  if (clickStorage.length < 2) {
-    for (var i = 0; i < boardLocation.length; i++) {
-      if (numId === allPictures[i].boardLocation) {
-        allPictures[i].currentSide = allPictures[i].filepath;
-        clickStorage.push(i);
 
+  if (matchLocation[numId] === false) {
+    // for two turns
+    if (clickStorage.length < 2) {
+      for (var i = 0; i < boardLocation.length; i++) {
+        if (numId === allPictures[i].boardLocation) {
+          allPictures[i].currentSide = allPictures[i].filepath;
+          clickStorage.push(i);
+
+        }
       }
     }
-  }
-  gameBoard.innerHTML = '';
-  makeGameBoard();
+    gameBoard.innerHTML = '';
+    makeGameBoard();
 
-  console.log('click storage ', clickStorage.length);
+    console.log('click storage ', clickStorage.length);
 
-  // function wait () {
-  //   alert('give them some time to look at the cards before flipping them over');
-  // }
-
-  if (clickStorage.length === 2) {
-    if (allPictures[clickStorage[0]].idNumber !== allPictures[clickStorage[1]].idNumber) {
-      allPictures[clickStorage[1]].currentSide = allPictures[0].cardBack;
-      allPictures[clickStorage[0]].currentSide = allPictures[0].cardBack;
-      // setTimeout(wait, 4000);
-      gameBoard.innerHTML = '';
-      makeGameBoard();
+    if (clickStorage.length === 2) {
+      if (allPictures[clickStorage[0]].idNumber !== allPictures[clickStorage[1]].idNumber) {
+        allPictures[clickStorage[1]].currentSide = allPictures[0].cardBack;
+        allPictures[clickStorage[0]].currentSide = allPictures[0].cardBack;
+        setTimeout(wait, 2000);
+      } else {
+        matchLocation[allPictures[clickStorage[1]].boardLocation] = true;
+        matchLocation[allPictures[clickStorage[0]].boardLocation] = true;
+      }
+      clickStorage = [];
     }
-    clickStorage = [];
+
+
+    // when click counter is 2, compare pictures
+    // if match, leave current side to pathfile
+    // if no match, return current sides to cardback
+
+
+
+
+      // Start timer for 15 seconds until next click [STRETCH]
+    // CLEAR THE BOARD
+    // display needs to change from cardback to
   }
-
-
-  // when click counter is 2, compare pictures
-  // if match, leave current side to pathfile
-  // if no match, return current sides to cardback
-
-
-
-
-    // Start timer for 15 seconds until next click [STRETCH]
-  // CLEAR THE BOARD
-  // display needs to change from cardback to
 }
 
 /////////////////////////////////////////////////////////////////////////////////
