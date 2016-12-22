@@ -6,6 +6,7 @@ var clickStorage = [];
 var matchLocation = [];
 var gameBoard = document.getElementById('gameBoard');
 var startingTimeInMs;
+var userHandler;
 
 ////// DIS THE IMAGE OBJECT MON ///////
 
@@ -149,6 +150,7 @@ function play(e) {
   startGame.innerHTML='';
   seeRegisteredScores.innerHTML='';
   playAgain.innerHTML='';
+  seeInstructions.innerHTML= '';
   picIds();
   picIds();
   randomImages();
@@ -198,11 +200,21 @@ function checkScores() {
 
 //Populate User Name
 //Check UserName on Main Page for blanks
-function userHandler(event) {
-  event.preventDefault();
-  localStorage.userName = JSON.stringify(event.target.userName.value);
-  userNamePopulated();
+if (localStorage.userName) {
+  console.log('in the if local storage user name');
+  userForm.innerHTML='';
+  var pEl = document.createElement('p');
+  pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
+  playGame.appendChild(pEl);
+  displayYesNoButtons();
 }
+
+function userHandler(event) {
+    event.preventDefault();
+    localStorage.userName = JSON.stringify(event.target.userName.value);
+    userNamePopulated();
+  }
+
 
 function userNamePopulated() {
   userForm.innerHTML='';
@@ -288,7 +300,9 @@ function registerYourScore(){
 }
 
 function playAgainButton() {
-  // e.preventDefault();
+  var h3El = document.createElement('h3');
+  h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
+  wantToPlay.appendChild(h3El);
   var newButtonPlayAgain = document.createElement('BUTTON')
   newButtonPlayAgain.textContent = 'Play Again?';
   playAgain.appendChild(newButtonPlayAgain);
@@ -298,10 +312,6 @@ function playAgainButton() {
 function registerScorePage() {//placeholder for calling the registerScorePage
   // e.preventDefault();
   console.log('placeholder for registerScorePage function');
-}
-
-function wantToPlayAgain() {//placeholder for calling the function that refreshes the gameboard
-  //display Play again button
 }
 
 //Event Listeners for Main Page
