@@ -24,14 +24,15 @@ label {
   font-family: sans-serif;
   font-weight: bolder;
   /*margin-bottom: 10px*/
-  font-size: 50px;
-  margin-left: 35%;
+  font-size: 30px;
+  margin-left: 25%;
   text-align: center;
 }
 input {
-  width: 50%;
-  height: 40px;
-  margin-left: 25%;
+  width: 30%;
+  height: 30px;
+  margin: 0 auto;
+  font-size: 25px;
   box-sizing: border-box;
   background-color: white;
 }
@@ -69,7 +70,7 @@ animation: fadeIn 3s;
 h1 {
 
 animation: bounce 1s;
-  font-size: 92px;
+  font-size: 70px;
  /*padding: 80px 50px;*/
  text-align: center;
  text-transform: uppercase;
@@ -112,9 +113,10 @@ h3 {
   font-size: 35px;
 }
 ul li{
-  margin-left: 23%;
+  margin-left: 25%;
   display:inline-block;
   padding:0 10px;
+
 }
 li button {
   opacity:.5;
@@ -122,7 +124,10 @@ li button {
   font-family: sans-serif;
   font-weight: bolder;
   font-size: 20px;
+  padding: 7px 20px;
   border-radius: 40px;
+  background-color: white;
+
 }
 
 #team-member-page {
@@ -176,19 +181,14 @@ td {
   transition:opacity 0.3s linear;
   font-family: sans-serif;
   font-weight: bolder;
-  margin-bottom: 10px
-  font-size: 20px;
+  font-size: 30px;
   border-radius: 40px;
   border: none;
   color: black;
-
   background-color: white;
   padding: 10px 15px;
-  /*margin: 50%*/
-  margin-left: 39%;
-
+  margin-left: 35%;
   margin-top: 10px;
-
   cursor: pointer;
   float: none;
 }
@@ -239,7 +239,7 @@ h3 button {
   font-family: sans-serif;
   font-weight: bolder;
   /*margin-bottom: 50px*/
-  font-size: 50px;
+  font-size: 30px;
   border-radius: 35px;
   border: none;
   color: black;
@@ -247,7 +247,7 @@ h3 button {
   background-color: #B33E3E;
   padding: 10px 15px;
   margin-top: 5%;
-  margin-left: 33%;
+  margin-left: 0 auto;
   margin-bottom: 30px;
 
   cursor: pointer;
@@ -259,16 +259,14 @@ p button {
   transition:opacity .3s linear;
   font-family: sans-serif;
   font-weight: bolder;
-  /*margin-bottom: 50px*/
-  font-size: 50px;
+  font-size: 30px;
   border-radius: 35px;
   border: none;
   color: black;
-  /*background: #888;*/
   background-color: #B33E3E;
   padding: 10px 15px;
   margin-top: 5%;
-  margin-left: 38%;
+  margin-left: 0 auto;
   margin-bottom: 30px;
   cursor: pointer;
   float: none;
@@ -309,7 +307,6 @@ p button:hover {
   /*background: #888;*/
   color:black;
   opacity: 2;
-}
 
 
 #gameBoard {
