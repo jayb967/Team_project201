@@ -12,9 +12,7 @@ var td2;
 ///////////////////// LOCAL STORAGE TESTING GROUNDS
 var testLocalStorageNames = ['steve', 'bob', 'dope', 'another name', 'some more shit', 'boss status', 'fuck me', 'is this 10 yet', 'YAASSSS', 'Lela Star'];
 var testLocalStorageScores = [1, 15, 45, 90, 100, 156, 212, 500, 750, 1000];
-
-/////////////////////// FROM THE LOCAL STORAGE SHIT
-
+/////////////////////////////////////////////////////////////////
 function putScoresOnBoard(tableScores, tr, td1, td2, i) {
   tr = document.createElement('tr');
   tr.id = i;
@@ -42,23 +40,41 @@ function makeScoresChart() {
     }
   }
 }
+// makeScoresChart();
 
-var fourBoard = makeScoresChart();
-var sixBoard = makeScoresChart();
 
-// TWO BUTTONS YOU SEXY FUCK SLUT
-// SO JUST CHECK FROM THE LOCAL STORAGE, THE SIZE ATTRIBUTE
-If (JSON.parse(localStorage.boardSize) === 8) {
-  fourBoard;
-} else {
-  sixBoard;
-}
+/////////////////////// FROM THE LOCAL STORAGE SHIT
+// var localBoardSize = JSON.parse(localStorage.getItem('boardSize'));
+// var localUserName = JSON.parse(localStorage.getItem('userName'));
+//
+// var localStorageNames = [];
+// var localStorageScores = [];
+// var localStorageBoardSize = [];
+//
+// function renderTopTable() {
+//   var i = 0;
+//   if (localBoardSize === 8) {
+//     while (localStorageNames.length < localUserName.length) {
+//       var localHighScores4 = JSON.parse(localStorage.getItem('highScores4'));
+//       localStorageNames.push(localUserName[i]);
+//       localStorageScores.push(localHighScores4[i]);
+//       i++;
+//     }
+//   } else {
+//     while (localStorageNames.length < localUserName.length) {
+//       var localHighScores6 = JSON.parse(localStorage.getItem('highScores6'));
+//       localStorageNames.push(localUserName[i]);
+//       localStorageScores.push(localHighScores6[i]);
+//       i++;
+//     }
+//   }
+// }
 
 function playGameHandler(e) {
   e.preventDefault();
   document.location.href = 'index.html';
 }
 
- document.getElementById('play-again').addEventListener('click', playGameHandler);
-// document.getElementById(playGameButton);
-// playGameButton.addEventListener('click', playGameHandler);
+document.getElementById('play-again').addEventListener('click', playGameHandler);
+document.getElementById(playGameButton);
+playGameButton.addEventListener('click', playGameHandler);
