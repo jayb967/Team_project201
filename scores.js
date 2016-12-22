@@ -9,13 +9,13 @@ var tr;
 var td1;
 var td2;
 
-// LOCAL STORAGE STUFF
+///////////////////// LOCAL STORAGE TESTING GROUNDS
 var testLocalStorageNames = ['steve', 'bob', 'dope', 'another name', 'some more shit', 'boss status', 'fuck me', 'is this 10 yet', 'YAASSSS', 'Lela Star'];
 var testLocalStorageScores = [1, 15, 45, 90, 100, 156, 212, 500, 750, 1000];
-var newHighScore = 69;
+
+/////////////////////// FROM THE LOCAL STORAGE SHIT
 
 function putScoresOnBoard(tableScores, tr, td1, td2, i) {
-  // th = document.create('th');
   tr = document.createElement('tr');
   tr.id = i;
   td1 = document.createElement('td');
@@ -30,7 +30,6 @@ function putScoresOnBoard(tableScores, tr, td1, td2, i) {
 }
 
 function makeScoresChart() {
-  // var th;
   var tr;
   var td1;
   var td2;
@@ -43,16 +42,17 @@ function makeScoresChart() {
     }
   }
 }
+
 var fourBoard = makeScoresChart();
 var sixBoard = makeScoresChart();
 
 // TWO BUTTONS YOU SEXY FUCK SLUT
 // SO JUST CHECK FROM THE LOCAL STORAGE, THE SIZE ATTRIBUTE
-// If (JSON.parse(localStorage.size) === 4) {
-//   fourBoard;
-// } else {
-//   sixBoard;
-// }
+If (JSON.parse(localStorage.boardSize) === 8) {
+  fourBoard;
+} else {
+  sixBoard;
+}
 
 function playGameHandler(e) {
   e.preventDefault();
