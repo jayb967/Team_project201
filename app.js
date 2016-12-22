@@ -26,7 +26,6 @@ var playAgain = document.getElementById('playAgain');//starts the game over
 var seeRegisteredScores = document.getElementById('seeRegisteredScores');//goes to the scores page
 var isPlayerClicking = document.getElementById('isPlayerClicking');
 
-
 function Img(idNumber) {
   this.idNumber = idNumber;
   this.filepath = 'img/' + this.idNumber + '.png';
