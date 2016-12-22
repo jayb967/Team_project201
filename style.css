@@ -5,11 +5,15 @@
 
 
 * {
-  font-family:sans-serif;
-  background-color: #96C0CE;
-  color: #525564;
+  font-family: 'Arial', sans-serif;
   /*border:2px solid green;*/
 }
+body {
+  background-color: #96C0CE;
+  text-align: center;
+  color: #525564;
+}
+
 label {
   font-family: sans-serif;
   font-weight: bolder;
@@ -84,12 +88,13 @@ li {
     font-size: 40px;
 }
 
-table {
-  margin: auto;
+.about table{
+  margin-left: 50%;
+  margin-right: 50%;
   padding: 15px;
 }
 
-th {
+.about th {
   font-family: sans-serif;
   text-align: center;
   font-weight: bolder;
@@ -97,7 +102,7 @@ th {
   padding: 20px 30px 20px 6px;
 }
 
-td {
+.about td {
   font-family: sans-serif;
   font-weight: bold;
   font-size: 30px;
@@ -208,3 +213,30 @@ img {
   height: 150px;
   width: 150px;
 }
+
+p {
+  margin: 0 auto;
+  align-content: center;
+}
+
+ul {
+  margin: 0 auto;
+  align-content: center;
+}
+
+table .gameTable {
+  padding: 3px;
+  border: 5px solid red;
+}
+table {
+  display: block;
+  margin-left: 50%;
+  margin-right: 50%;
+}
+
+/*#head3r {
+  font-size: 36px;
+  margin: 0 auto;
+  color: #FEF6EB;
+  background-color: #C25B56;
+}*/
