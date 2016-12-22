@@ -1,35 +1,7 @@
 'use strict';
-//////// WORKING WITH TEN CELLS INSTEAD OF THE NEEDED 20
-// global DOM variables
-// var tableScores = document.getElementById('tableScores');
-// var topRowEl;
-// var topCellEl;
-// var topHeadEl;
-// // LOCAL STORAGE STUFF
-// var testLocalStorageNames = ['steve', 'bob', 'dope', 'another name', 'some more shit', 'boss status', 'here we goooooo', 'is this 10 yet', 'YAASSSS'];
-// var testLocalStorageScores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-//
-// console.log(testLocalStorageScores);
-//
-// function putScoresOnBoard(tableScores, topRowEl, topCellEl, i) {
-//   topRowEl = document.createElement('tr');
-//   topCellEl = topRowEl.insertCell(-1);
-//   topRowEl.appendChild(topCellEl);
-//   tableScores.appendChild(topRowEl);
-//   topRowEl.innerHTML = testLocalStorageNames[i].toUpperCase() + ': ' + testLocalStorageScores[i];
-// }
-//
-// function makeScoresChart() {
-//   var topRowEl;
-//   var topCellEl;
-//   for (var i = 0; i < 10; i++) {
-//     topRowEl = document.createElement('tr');
-//     putScoresOnBoard(tableScores, topRowEl, topCellEl, i);
-//   }
-// }
-// makeScoresChart();
 
 //////////////// PLAY AREA /////////////////////
+//tableScores.rows[0].cells[0] // FUCKING IMPORTANT, THIS IS HOW YOU REFERENCE THE FUCKING CELL THAT YOU WANT.
 
 var tableScores = document.getElementById('tableScores');
 // var th;
@@ -38,24 +10,17 @@ var td1;
 var td2;
 
 // LOCAL STORAGE STUFF
-var testLocalStorageNames = ['steve', 'bob', 'dope', 'another name', 'some more shit', 'boss status', 'fuck me', 'is this 10 yet', 'YAASSSS'];
-var testLocalStorageScores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-var sortedList = [];
-
-function TopDual(name, score) {
-  this.name = name;
-  this.score = score;
-}
-
-
-console.log(testLocalStorageScores);
+var testLocalStorageNames = ['steve', 'bob', 'dope', 'another name', 'some more shit', 'boss status', 'fuck me', 'is this 10 yet', 'YAASSSS', 'Lela Star'];
+var testLocalStorageScores = [1, 15, 45, 90, 100, 156, 212, 500, 750, 1000];
+var newHighScore = 69;
 
 function putScoresOnBoard(tableScores, tr, td1, td2, i) {
   // th = document.create('th');
   tr = document.createElement('tr');
+  tr.id = i;
   td1 = document.createElement('td');
   td2 = document.createElement('td');
-  var text1 = document.createTextNode(testLocalStorageNames[i]);
+  var text1 = document.createTextNode(testLocalStorageNames[i].toUpperCase());
   var text2 = document.createTextNode(testLocalStorageScores[i]);
   td1.appendChild(text1);
   td2.appendChild(text2);
@@ -79,3 +44,14 @@ function makeScoresChart() {
   }
 }
 makeScoresChart();
+
+
+
+function playGameHandler(event) {
+  event.preventDefault();
+  document.location.href = 'index.html';
+}
+
+var playGameButton = document.getElementById('');
+document.getElementById(playGameButton);
+playGameButton.addEventListener('click', playGameHandler);

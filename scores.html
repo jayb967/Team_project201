@@ -2,16 +2,24 @@
 <html>
   <head>
     <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
     <link rel="stylesheet" href="scores.css">
       <title>High Scores</title>
 
   </head>
   <body>
-    <h1> CONGRATULATIONS!!!! YOU MADE THE TOP SCORES!!! <h1>
+    <h1> CONGRATULATIONS!!!! YOU MADE THE TOP SCORES!!! </h1>
     <header>Here are the high scores!</header>
+
+    <div class="container">
+	     <div class="planet"></div>
+             <table id="tableScores"></table>
+	      <div class="rocket"></div>
+    </div>
+
     <section id="greet"></section>
-      <table id="tableScores"></table>
+    <button type="button" id="ready-to-play">Play Again?</button>
+    <p id="playAgain"></p>
 
     <script src="scores.js"></script>
   </body>
