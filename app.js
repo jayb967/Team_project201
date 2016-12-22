@@ -7,13 +7,10 @@ var matchLocation = [];
 var subset = [];
 var gameBoard = document.getElementById('gameBoard');
 var startingTimeInMs;
-
-////// DIS THE IMAGE OBJECT MON ///////
-
+var boardSize = 18;
 var initialNameEntered = false;
 var isHighScore = false;//used to determine if the Register Your Score button should be displayed
 
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++
 //DOM variables
 var userForm = document.getElementById('user-form'); //user name
 var playGame = document.getElementById('playGame');//want to play?
@@ -41,7 +38,7 @@ function randomizeSet() {
 function pickRandomSetOfImages() {
   var tempId;
   subset = [];
-  while (subset.length < 8) {
+  while (subset.length < boardSize) {
     tempId = randomizeSet();
     if (!subset.includes(tempId)) {
       subset.push(tempId);
@@ -51,13 +48,13 @@ function pickRandomSetOfImages() {
 
 // All of our pic names are just numbers so we don't have to write out all of the individual pic IDS doppppeeeeeee
 function picIds() {
-  for (var i = 0; i < 8; i++) {
+  for (var i = 0; i < boardSize; i++) {
     allPictures.push(new Img(subset[i]));
   }
 }
 
 function rand() {
-  return Math.floor(Math.random() * 16);
+  return Math.floor(Math.random() * (boardSize * 2));
 }
 
 function randomImages () {
@@ -67,7 +64,7 @@ function randomImages () {
       boardLocation.push(temp);
       allPictures[temp].boardLocation = boardLocation.length - 1;
     }
-  } while (boardLocation.length < 16);
+  } while (boardLocation.length < (boardSize * 2));
 }
 
 function putImagesOnBoard (tcEl, imgEl, trEl, gameBoard, i) {
@@ -85,7 +82,7 @@ function makeGameBoard() {
   var imgEl;
   var tcEl;
   for (var i = 0; i < boardLocation.length; i++) {
-    if (i % 4 === 0) {
+    if (i % (Math.sqrt(boardSize * 2)) === 0) {
       trEl = document.createElement('tr');
       putImagesOnBoard(tcEl, imgEl, trEl, gameBoard, i);
     } else {
