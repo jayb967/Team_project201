@@ -43,15 +43,22 @@ function makeScoresChart() {
     }
   }
 }
-makeScoresChart();
+var fourBoard = makeScoresChart();
+var sixBoard = makeScoresChart();
 
+// TWO BUTTONS YOU SEXY FUCK SLUT
+// SO JUST CHECK FROM THE LOCAL STORAGE, THE SIZE ATTRIBUTE
+// If (JSON.parse(localStorage.size) === 4) {
+//   fourBoard;
+// } else {
+//   sixBoard;
+// }
 
-
-function playGameHandler(event) {
-  event.preventDefault();
+function playGameHandler(e) {
+  e.preventDefault();
   document.location.href = 'index.html';
 }
 
-var playGameButton = document.getElementById('');
-document.getElementById(playGameButton);
-playGameButton.addEventListener('click', playGameHandler);
+ document.getElementById('play-again').addEventListener('click', playGameHandler);
+// document.getElementById(playGameButton);
+// playGameButton.addEventListener('click', playGameHandler);
