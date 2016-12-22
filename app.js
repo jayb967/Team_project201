@@ -19,7 +19,6 @@ var noButton = document.getElementById('noButton');//no to play
 var wantToPlay = document.getElementById('yesLetsPlay');//displays game instructions
 var seeInstructions = document.getElementById('seeInstructions');
 var registerScore = document.getElementById('registerScore');//top ten player registry
-var playAgain = document.getElementById('playAgain');//starts the game over
 
 function Img(idNumber) {
   this.idNumber = idNumber;
