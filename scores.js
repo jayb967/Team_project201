@@ -1,75 +1,64 @@
 'use strict';
-//////// WORKING WITH TEN CELLS INSTEAD OF THE NEEDED 20
-// global DOM variables
+
+//////////////// PLAY AREA /////////////////////
+//tableScores.rows[0].cells[0] // FUCKING IMPORTANT, THIS IS HOW YOU REFERENCE THE FUCKING CELL THAT YOU WANT.
+
 var tableScores = document.getElementById('tableScores');
-var topRowEl;
-var topCellEl;
-var topHeadEl;
+// var th;
+var tr;
+var td1;
+var td2;
+
 // LOCAL STORAGE STUFF
-var testLocalStorageNames = ['steve', 'bob', 'dope', 'another name', 'some more shit', 'boss status', 'here we goooooo', 'is this 10 yet', 'YAASSSS'];
-var testLocalStorageScores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+var testLocalStorageNames = ['steve', 'bob', 'dope', 'another name', 'some more shit', 'boss status', 'fuck me', 'is this 10 yet', 'YAASSSS', 'Lela Star'];
+var testLocalStorageScores = [1, 15, 45, 90, 100, 156, 212, 500, 750, 1000];
+var newHighScore = 69;
 
-console.log(testLocalStorageScores);
-
-function putScoresOnBoard(tableScores, topRowEl, topCellEl, i) {
-  topRowEl = document.createElement('tr');
-  topCellEl = topRowEl.insertCell(-1);
-  topRowEl.appendChild(topCellEl);
-  tableScores.appendChild(topRowEl);
-  topRowEl.innerHTML = testLocalStorageNames[i].toUpperCase() + ': ' + testLocalStorageScores[i];
+function putScoresOnBoard(tableScores, tr, td1, td2, i) {
+  // th = document.create('th');
+  tr = document.createElement('tr');
+  tr.id = i;
+  td1 = document.createElement('td');
+  td2 = document.createElement('td');
+  var text1 = document.createTextNode(testLocalStorageNames[i].toUpperCase());
+  var text2 = document.createTextNode(testLocalStorageScores[i]);
+  td1.appendChild(text1);
+  td2.appendChild(text2);
+  tr.appendChild(td1);
+  tr.appendChild(td2);
+  tableScores.appendChild(tr);
 }
 
 function makeScoresChart() {
-  var topRowEl;
-  var topCellEl;
+  // var th;
+  var tr;
+  var td1;
+  var td2;
   for (var i = 0; i < 10; i++) {
-    topRowEl = document.createElement('tr');
-    putScoresOnBoard(tableScores, topRowEl, topCellEl, i);
+    if (i % 2 === 0) {
+      tr = document.createElement('tr');
+      putScoresOnBoard(tableScores, tr, td1, td2, i);
+    } else {
+      putScoresOnBoard(tableScores, tr, td1, td2, i);
+    }
   }
 }
-makeScoresChart();
+var fourBoard = makeScoresChart();
+var sixBoard = makeScoresChart();
 
-//////////////// PLAY AREA /////////////////////
-//global DOM variables
-// var tableScores = document.getElementById('tableScores');
-// var topHeadEl;
-// var topRowEl;
-// var topCellEl;
-//
-// // LOCAL STORAGE STUFF
-// var testLocalStorageNames = ['steve', 'bob', 'dope', 'another name', 'some more shit', 'boss status', 'fuck me', 'is this 10 yet', 'YAASSSS'];
-// var testLocalStorageScores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-// var sortedList = [];
-//
-// function TopDual(name, score) {
-//   this.name = name;
-//   this.score = score;
+// TWO BUTTONS YOU SEXY FUCK SLUT
+// SO JUST CHECK FROM THE LOCAL STORAGE, THE SIZE ATTRIBUTE
+// If (JSON.parse(localStorage.size) === 4) {
+//   fourBoard;
+// } else {
+//   sixBoard;
 // }
-//
-//
-// console.log(testLocalStorageScores);
-//
-// function putScoresOnBoard(tableScores, topRowEl, topCellEl, topHeadEl, i) {
-//   topHeadEl = document.create('th');
-//   topRowEl = document.createElement('tr');
-//   topCellEl = topRowEl.insertCell(-1);
-//   topRowEl.appendChild(topCellEl);
-//   tableScores.appendChild(topRowEl);
-//   topRowEl.innerHTML;
-//   testLocalStorageNames[i].toUpperCase() + ': ' + testLocalStorageScores[i];
-// }
-//
-// function makeScoresChart() {
-//   var topRowEl;
-//   var topCellEl;
-//   for (var i = 0; i < 20; i++) {
-//     if (i % 2 === 0) {
-//       topRowEl = document.createElement('tr');
-//       putScoresOnBoard(tableScores, topRowEl, topCellEl, topHeadEl, i);
-//     } else {
-//       topHeadEl = document.createElement('th');
-//       putScoresOnBoard(tableScores, topRowEl, topCellEl, topHeadEl, i);
-//     }
-//   }
-// }
-// makeScoresChart();
+
+function playGameHandler(e) {
+  e.preventDefault();
+  document.location.href = 'index.html';
+}
+
+ document.getElementById('play-again').addEventListener('click', playGameHandler);
+// document.getElementById(playGameButton);
+// playGameButton.addEventListener('click', playGameHandler);
