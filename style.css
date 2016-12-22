@@ -11,12 +11,9 @@
 
 * {
   font-family: 'Arial', sans-serif;
-  /*border:2px solid green;*/
-}
-body {
   background-color: #96C0CE;
-  text-align: center;
   color: #525564;
+  /*border:2px solid green;*/
 }
 
 table {
@@ -135,13 +132,13 @@ li button {
     font-size: 40px;
 }
 
-.about table{
+table{
   margin-left: 50%;
   margin-right: 50%;
   padding: 15px;
 }
 
-.about th {
+th {
   font-family: sans-serif;
   text-align: center;
   font-weight: bolder;
@@ -149,7 +146,7 @@ li button {
   padding: 20px 30px 20px 6px;
 }
 
-.about td {
+td {
   font-family: sans-serif;
   font-weight: bold;
   font-size: 30px;
