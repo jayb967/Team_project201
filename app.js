@@ -151,13 +151,17 @@ function play(e) {
   registerScore.innerHTML = '';
   playAgain.innerHTML = '';
   seeInstructions.innerHTML = '';
+  document.getElementById('afterGame').innerHTML = '';
   picIds();
   picIds();
   randomImages();
   makeGameBoard();
   initializeMatchLocation();
   startingTimeInMs = Date.now();
-
+  //for testing purposes, this button allows user to skip game
+  var butt = document.createElement('button');
+  butt.textContent = 'finish game';
+  document.getElementById('tempButt').appendChild(butt);
 }
 
 function checkScores() {
@@ -171,8 +175,6 @@ function checkScores() {
   if (localStorage.highScores) {
     highScores = JSON.parse(localStorage.getItem('highScores'));
     if (parseInt(highScores[highScores.length - 1]) > newScore) {
-      console.log(highScores.length - 1);
-      console.log(parseInt(highScores[highScores.length - 1]));
       isHighScore = true;
       if (isHighScore) {
         highScores.push(newScore);
@@ -193,7 +195,6 @@ function checkScores() {
 //Populate User Name
 //Check UserName on Main Page for blanks
 if (localStorage.userName) {
-  console.log('in the if local storage user name');
   userForm.innerHTML='';
   var pEl = document.createElement('p');
   pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
@@ -289,9 +290,6 @@ function registerYourScore(){
 }
 
 function playAgainButton() {
-  var h3El = document.createElement('h3');
-  h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
-  wantToPlay.appendChild(h3El);
   var newButtonPlayAgain = document.createElement('BUTTON')
   newButtonPlayAgain.textContent = 'PLAY AGAIN';
   playAgain.appendChild(newButtonPlayAgain);
@@ -304,7 +302,11 @@ function registerScorePage(e) {//placeholder for calling the registerScorePage
   document.getElementById('afterGame').textContent = '';
   document.location.href = 'scores.html';
 }
-
+function buttHandler(e) {
+  e.preventDefault();
+  endGame();
+  document.getElementById('tempButt').innerHTML = '';
+}
 //Event Listeners for Main Page
 userForm.addEventListener('submit', userHandler);
 yesButton.addEventListener('click',yesLetsPlay);
@@ -315,3 +317,4 @@ registerScore.addEventListener('click',registerScorePage);//topten
 playAgain.addEventListener('click',play);
 gameBoard.addEventListener('click', clickFlip);
 isPlayerClicking.addEventListener('click',clickMeAndWait);
+document.getElementById('tempButt').addEventListener('click', buttHandler);
