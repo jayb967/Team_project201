@@ -18,10 +18,8 @@ var yesButton = document.getElementById('yesButton');//yes to play
 var noButton = document.getElementById('noButton');//no to play
 var wantToPlay = document.getElementById('yesLetsPlay');//displays game instructions
 var seeInstructions = document.getElementById('seeInstructions');
-var startGame = document.getElementById('startGame');//starts Game & timer begins
 var registerScore = document.getElementById('registerScore');//top ten player registry
 var playAgain = document.getElementById('playAgain');//starts the game over
-var isPlayerClicking = document.getElementById('isPlayerClicking');
 
 function Img(idNumber) {
   this.idNumber = idNumber;
@@ -90,16 +88,6 @@ function makeGameBoard() {
     }
   }
 }
-function hideGameOptions() {
-  document.getElementById('options').style.visibility = 'hidden';
-}
-
-hideGameOptions();
-
-function displayGameOptions() {
-  document.getElementById('options').style.visibility = 'visible';
-}
-
 ////////////////// VARIABLES USED FOR THE GAME CLICK FUNCTION /////////////////
 
 function initializeMatchLocation () {
@@ -154,12 +142,11 @@ function endGame() {
   localStorage.newScore = JSON.stringify(Math.round(Math.floor(timeCalc * 100))); //need to round-up
   setTimeout(function () {
     gameBoard.innerHTML = '';
-    startGame.innerHTML = '';
     wantToPlay.innerHTML = '';
     checkScores();
-    playAgainButton();
+    playAgainButtons();
     registerYourScore();
-  }, 3000);
+  }, 2000);
 }
 
 function play(e) {
@@ -168,9 +155,10 @@ function play(e) {
   boardLocation = [];
   clickStorage = [];
   matchLocation = [];
-  startGame.innerHTML = '';
+  document.getElementById('options').innerHTML = '';
   registerScore.innerHTML = '';
-  playAgain.innerHTML = '';
+  document.getElementById('playSame').innerHTML = '';
+  document.getElementById('playOther').innerHTML = '';
   document.getElementById('afterGame').innerHTML = '';
   pickRandomSetOfImages();
   picIds();
@@ -178,7 +166,6 @@ function play(e) {
   randomImages();
   makeGameBoard();
   initializeMatchLocation();
-  // yesLetsPlay();
   startingTimeInMs = Date.now();
   //for testing purposes, this button allows user to skip game
   var butt = document.createElement('button');
@@ -250,7 +237,6 @@ function userHandler(event) {
   userNamePopulated();
 }
 
-
 function userNamePopulated() {
   userForm.innerHTML='';
   if (localStorage.userName && initialNameEntered === false) {
@@ -278,20 +264,6 @@ function newInstructionsButton () {
   instructionButton.textContent = 'SEE GAME INSTRUCTIONS'
   seeInstructions.appendChild(instructionButton);
 }
-//start button and call the timer function
-function yesLetsPlay() {
-  playGame.innerHTML='';
-  yesButton.innerHTML='';
-  noButton.innerHTML='';
-  displayGameOptions();
-  newInstructionsButton();
-
-//start button
-  var newButtonStartGame = document.createElement('BUTTON')
-  newButtonStartGame.textContent = 'START GAME';
-  startGame.appendChild(newButtonStartGame);
-
-}
 
 function seeInitialInstructions() {
   var h3El = document.createElement('h3');
@@ -303,26 +275,11 @@ function seeInitialInstructions() {
   document.getElementById('hideInstructions').appendChild(hideInstructionsButton);
 }
 
-
 //User doesn't want to play, they are transported to the Jokes page.
 function noLetsNotPlay() {
   document.location.href = 'jokes.html'; //this hooks into the Jokes Page
 }
 
-function clickMeAndWait() {
-  setTimeout('alert(\'Surprise!\')', 5000);
-}
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++
-// this code is to be used when we are waiting for the user to click on cards
-// When a visitor clicks the button, the setTimeout() method is called, passing in the expression that
-// we want to run after the time delay, and the value of the time delay itself - 5,000 milliseconds or 5 seconds.
-// <input type="button" name="clickMe" value="Click me and wait!"  put it in the html
-// onclick="setTimeout('alert(\'Surprise!\')', 5000)"/>  I can put this in an eventhandler for the players clicks between cards
-// }
-
-//When the game is finished, for top ten winners, set topTen = true and gameOver or remove these variables and call this function.
-//this displays the register your score button, otherwise we display the See Registered Scores button
-//both top ten and non-top ten will see the Play again button
 function registerYourScore(){
   var newButtonRegisterYourScore = document.createElement('BUTTON')
   newButtonRegisterYourScore.textContent = 'SEE HIGH SCORES';
@@ -336,13 +293,35 @@ function registerYourScore(){
   }
   localStorage.newScore = '';
 }
+function createOptionsButton(size, whereAppend) {
+  var newPlayButton = document.createElement('BUTTON')
+  newPlayButton.textContent = 'PLAY ' + size;
+  document.getElementById(whereAppend).appendChild(newPlayButton);
+}
 
-function playAgainButton() {
-  var newButtonPlayAgain = document.createElement('BUTTON')
-  newButtonPlayAgain.textContent = 'PLAY AGAIN';
-  playAgain.appendChild(newButtonPlayAgain);
+function yesLetsPlay() {
+  playGame.innerHTML='';
+  yesButton.innerHTML='';
+  noButton.innerHTML='';
+  createOptionsButton('4x4 BOARD', 'op1');
+  createOptionsButton('6x6 BOARD', 'op2')
+  newInstructionsButton();
+}
+
+function playAgainButtons() {
+  var tempSize;
+  var tempNewSize;
+  if (boardSize === 8) {
+    tempSize = '4x4 BOARD AGAIN';
+    tempNewSize = '6x6 INSTEAD'
+  } else {
+    tempSize = '6x6 BOARD AGAIN';
+    tempNewSize = '4x4 INSTEAD';
+  }
+  createOptionsButton(tempSize, 'playSame');
+  createOptionsButton(tempNewSize, 'playOther');
   document.getElementById('afterGame').innerHTML = '';
-  //wantToPlayAgain();
+
 }
 
 function registerScorePage(e) {//placeholder for calling the registerScorePage
@@ -360,8 +339,13 @@ function hideInstructionsHandler(e) {
 
 function optionsHandler(e) {
   e.preventDefault();
-  hideGameOptions();
-  boardSize = document.querySelector('input[name=size]:checked').value;
+  var tempSize = event.target.innerText;
+  document.getElementById('options').innerHTML = '';
+  if (tempSize.charAt(5) === '4') {
+    boardSize = 8;
+  } else {
+    boardSize = 18;
+  }
 }
 
 function buttHandler(e) { //remove after testing is complete;
@@ -370,15 +354,15 @@ function buttHandler(e) { //remove after testing is complete;
   document.getElementById('tempButt').innerHTML = '';
 }
 //Event Listeners for Main Page
-document.getElementById('options').addEventListener('submit', optionsHandler);
+document.getElementById('options').addEventListener('click', optionsHandler);
+document.getElementById('options').addEventListener('click', play);
 userForm.addEventListener('submit', userHandler);
 yesButton.addEventListener('click',yesLetsPlay);
 seeInstructions.addEventListener('click',seeInitialInstructions);
 noButton.addEventListener('click',noLetsNotPlay);
-startGame.addEventListener('click', play);
 registerScore.addEventListener('click',registerScorePage);//topten
-playAgain.addEventListener('click',play);
+document.getElementById('playSame').addEventListener('click', play);
+document.getElementById('playOther').addEventListener('click', play);
 gameBoard.addEventListener('click', clickFlip);
-isPlayerClicking.addEventListener('click',clickMeAndWait);
 document.getElementById('tempButt').addEventListener('click', buttHandler);
 document.getElementById('hideInstructions').addEventListener('click', hideInstructionsHandler); //remove aftr testing is complete
