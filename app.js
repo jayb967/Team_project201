@@ -283,11 +283,13 @@ function playAgainButton() {
   var newButtonPlayAgain = document.createElement('BUTTON')
   newButtonPlayAgain.textContent = 'PLAY AGAIN';
   playAgain.appendChild(newButtonPlayAgain);
+  document.getElementById('afterGame').innerHTML = '';
   //wantToPlayAgain();
 }
 
-function registerScorePage(e) {//placeholder for calling the registerScorePage
+function registerScorePage(e) {
   e.preventDefault();
+  document.getElementById('afterGame').textContent = '';
   document.location.href = 'scores.html';
 }
 
