@@ -272,7 +272,7 @@ function newInstructionsButton () {
 
 function seeInitialInstructions() {
   var h3El = document.createElement('h3');
-  h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
+  h3El.textContent = 'The game begins with rows of face down cards. Once a play button is clicked, an invisible timer will start. Play by clicking on cards to turn them face up, two cards at a time. If a match occurs the cards will remain facing up. If a match does not occur, the cards will automatically be turned face down.';
   wantToPlay.appendChild(h3El);
   seeInstructions.innerHTML='';
   var hideInstructionsButton = document.createElement('button');
