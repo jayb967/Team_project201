@@ -167,27 +167,49 @@ function play(e) {
 function checkScores() {
   isHighScore = false;
   var highScores = [];
-  // var temphighScores = [];
+  var highScorers = [];
   var newScore = parseInt(JSON.parse(localStorage.getItem('newScore')));
-  function orderScores() {
-    highScores.sort(function(a, b){return a-b});
+  var userName = JSON.parse(localStorage.getItem('userName'));
+
+  function storeScores () {
+    localStorage.highScores = JSON.stringify(highScores);
+    localStorage.highScorers = JSON.stringify(highScorers);
   }
+
+  function placeForScore(score) {
+    return score >= newScore;
+  }
+
   if (localStorage.highScores) {
     highScores = JSON.parse(localStorage.getItem('highScores'));
-    if (parseInt(highScores[highScores.length - 1]) > newScore) {
+    highScorers = JSON.parse(localStorage.getItem('highScorers'));
+    if (parseInt(highScores[highScores.length - 1]) > newScore || highScores.length < 10) {
       isHighScore = true;
-      if (isHighScore) {
-        highScores.push(newScore);
-        orderScores();
-        if (highScores.length === 10) {
-          highScores.pop();
-        }
+      if (highScores.length === 10) {
+        highScores.pop();
+        highScorers.pop();
       }
+      var indexForNewHighScore = highScores.find(placeForScore);
+      console.log(indexForNewHighScore + ' num found in array');
+      indexForNewHighScore = highScores.indexOf(indexForNewHighScore);
+      console.log(indexForNewHighScore + ' index of above num found in array');
+      if (indexForNewHighScore !== -1) {
+        // indexForNewHighScore += 1;
+        alert('in the if');
+        highScores.splice(indexForNewHighScore, 0, newScore);
+        highScorers.splice(indexForNewHighScore, 0, userName);
+      } else {
+        highScores.push(newScore);
+        highScorers.push(userName);
+      }
+      storeScores();
     }
   } else {
+    isHighScore = true;
     highScores.push(newScore);
+    highScorers.push(userName);
+    storeScores();
   }
-  localStorage.highScores = JSON.stringify(highScores);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -197,7 +219,7 @@ function checkScores() {
 if (localStorage.userName) {
   userForm.innerHTML='';
   var pEl = document.createElement('p');
-  pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
+  pEl.textContent = JSON.parse(localStorage.getItem('userName')) + ', would you like to play a game?';
   playGame.appendChild(pEl);
   displayYesNoButtons();
 }
@@ -213,7 +235,7 @@ function userNamePopulated() {
   userForm.innerHTML='';
   if (localStorage.userName && initialNameEntered === false) {
     var pEl = document.createElement('p');
-    pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
+    pEl.textContent = JSON.parse(localStorage.getItem('userName')) + ', would you like to play a game?';
     playGame.appendChild(pEl);
     initialNameEntered = true;
     displayYesNoButtons();
@@ -302,7 +324,7 @@ function registerScorePage(e) {//placeholder for calling the registerScorePage
   document.getElementById('afterGame').textContent = '';
   document.location.href = 'scores.html';
 }
-function buttHandler(e) {
+function buttHandler(e) { //remove after testing is complete;
   e.preventDefault();
   endGame();
   document.getElementById('tempButt').innerHTML = '';
@@ -317,4 +339,4 @@ registerScore.addEventListener('click',registerScorePage);//topten
 playAgain.addEventListener('click',play);
 gameBoard.addEventListener('click', clickFlip);
 isPlayerClicking.addEventListener('click',clickMeAndWait);
-document.getElementById('tempButt').addEventListener('click', buttHandler);
+document.getElementById('tempButt').addEventListener('click', buttHandler); //remove aftr testing is complete
