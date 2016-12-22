@@ -32,9 +32,10 @@
 //////////////// PLAY AREA /////////////////////
 
 var tableScores = document.getElementById('tableScores');
-var topHeadEl;
-var topRowEl;
-var topCellEl;
+// var th;
+var tr;
+var td1;
+var td2;
 
 // LOCAL STORAGE STUFF
 var testLocalStorageNames = ['steve', 'bob', 'dope', 'another name', 'some more shit', 'boss status', 'fuck me', 'is this 10 yet', 'YAASSSS'];
@@ -49,26 +50,31 @@ function TopDual(name, score) {
 
 console.log(testLocalStorageScores);
 
-function putScoresOnBoard(tableScores, topRowEl, topCellEl, topHeadEl, i) {
-  topHeadEl = document.create('th');
-  topRowEl = document.createElement('tr');
-  topCellEl = topRowEl.insertCell(-1);
-  topRowEl.appendChild(topCellEl);
-  tableScores.appendChild(topRowEl);
-  topRowEl.innerHTML;
-  testLocalStorageNames[i].toUpperCase() + ': ' + testLocalStorageScores[i];
+function putScoresOnBoard(tableScores, tr, td1, td2, i) {
+  // th = document.create('th');
+  tr = document.createElement('tr');
+  td1 = document.createElement('td');
+  td2 = document.createElement('td');
+  var text1 = document.createTextNode(testLocalStorageNames[i]);
+  var text2 = document.createTextNode(testLocalStorageScores[i]);
+  td1.appendChild(text1);
+  td2.appendChild(text2);
+  tr.appendChild(td1);
+  tr.appendChild(td2);
+  tableScores.appendChild(tr);
 }
 
 function makeScoresChart() {
-  var topRowEl;
-  var topCellEl;
-  for (var i = 0; i < 20; i++) {
+  // var th;
+  var tr;
+  var td1;
+  var td2;
+  for (var i = 0; i < 10; i++) {
     if (i % 2 === 0) {
-      topRowEl = document.createElement('tr');
-      putScoresOnBoard(tableScores, topRowEl, topCellEl, topHeadEl, i);
+      tr = document.createElement('tr');
+      putScoresOnBoard(tableScores, tr, td1, td2, i);
     } else {
-      topHeadEl = document.createElement('th');
-      putScoresOnBoard(tableScores, topRowEl, topCellEl, topHeadEl, i);
+      putScoresOnBoard(tableScores, tr, td1, td2, i);
     }
   }
 }
