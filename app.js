@@ -150,17 +150,18 @@ function play(e) {
   startGame.innerHTML = '';
   registerScore.innerHTML = '';
   playAgain.innerHTML = '';
-  seeInstructions.innerHTML = '';
+  // seeInstructions.innerHTML = '';
   document.getElementById('afterGame').innerHTML = '';
   picIds();
   picIds();
   randomImages();
   makeGameBoard();
   initializeMatchLocation();
+  // yesLetsPlay();
   startingTimeInMs = Date.now();
   //for testing purposes, this button allows user to skip game
   var butt = document.createElement('button');
-  butt.textContent = 'finish game';
+  butt.textContent = 'FINISH GAME';
   document.getElementById('tempButt').appendChild(butt);
 }
 
@@ -194,8 +195,6 @@ function checkScores() {
       indexForNewHighScore = highScores.indexOf(indexForNewHighScore);
       console.log(indexForNewHighScore + ' index of above num found in array');
       if (indexForNewHighScore !== -1) {
-        // indexForNewHighScore += 1;
-        alert('in the if');
         highScores.splice(indexForNewHighScore, 0, newScore);
         highScorers.splice(indexForNewHighScore, 0, userName);
       } else {
@@ -246,26 +245,28 @@ function userNamePopulated() {
 function displayYesNoButtons() {
 //Yes button displayed
   var newButtonYes = document.createElement('BUTTON');
-  newButtonYes.textContent = 'Yes';
+  newButtonYes.textContent = 'YES';
   yesButton.appendChild(newButtonYes);
 //No button displayed
   var newButtonNo = document.createElement('BUTTON');
-  newButtonNo.textContent = 'No';
+  newButtonNo.textContent = 'NO';
   noButton.appendChild(newButtonNo);
 }
-
+function newInstructionsButton () {
+  var instructionButton = document.createElement('BUTTON');
+  instructionButton.textContent = 'SEE GAME INSTRUCTIONS'
+  seeInstructions.appendChild(instructionButton);
+}
 //start button and call the timer function
 function yesLetsPlay() {
   playGame.innerHTML='';
   yesButton.innerHTML='';
   noButton.innerHTML='';
-  var instructionButton = document.createElement('BUTTON');
-  instructionButton.textContent = 'See Instructions'
-  seeInstructions.appendChild(instructionButton);
+  newInstructionsButton();
 
 //start button
   var newButtonStartGame = document.createElement('BUTTON')
-  newButtonStartGame.textContent = 'Start Game';
+  newButtonStartGame.textContent = 'START GAME';
   startGame.appendChild(newButtonStartGame);
 
 }
@@ -275,6 +276,9 @@ function seeInitialInstructions() {
   h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
   wantToPlay.appendChild(h3El);
   seeInstructions.innerHTML='';
+  var hideInstructionsButton = document.createElement('button');
+  hideInstructionsButton.textContent = 'HIDE INSTRUCTIONS';
+  document.getElementById('hideInstructions').appendChild(hideInstructionsButton);
 }
 
 
@@ -324,6 +328,14 @@ function registerScorePage(e) {//placeholder for calling the registerScorePage
   document.getElementById('afterGame').textContent = '';
   document.location.href = 'scores.html';
 }
+
+function hideInstructionsHandler(e) {
+  e.preventDefault();
+  document.getElementById('hideInstructions').innerHTML = '';
+  wantToPlay.innerHTML = '';
+  newInstructionsButton();
+}
+
 function buttHandler(e) { //remove after testing is complete;
   e.preventDefault();
   endGame();
@@ -339,4 +351,5 @@ registerScore.addEventListener('click',registerScorePage);//topten
 playAgain.addEventListener('click',play);
 gameBoard.addEventListener('click', clickFlip);
 isPlayerClicking.addEventListener('click',clickMeAndWait);
-document.getElementById('tempButt').addEventListener('click', buttHandler); //remove aftr testing is complete
+document.getElementById('tempButt').addEventListener('click', buttHandler);
+document.getElementById('hideInstructions').addEventListener('click', hideInstructionsHandler); //remove aftr testing is complete
