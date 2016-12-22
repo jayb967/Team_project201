@@ -19,17 +19,12 @@ var playGame = document.getElementById('playGame');//want to play?
 var yesButton = document.getElementById('yesButton');//yes to play
 var noButton = document.getElementById('noButton');//no to play
 var wantToPlay = document.getElementById('yesLetsPlay');//displays game instructions
+var seeInstructions = document.getElementById('seeInstructions');
 var startGame = document.getElementById('startGame');//starts Game & timer begins
 var registerScore = document.getElementById('registerScore');//top ten player registry
 var playAgain = document.getElementById('playAgain');//starts the game over
 var seeRegisteredScores = document.getElementById('seeRegisteredScores');//goes to the scores page
-
-//Check UserName on Main Page for blanks
-function userHandler(event) {
-  //event.preventDefault();
-  localStorage.userName = JSON.stringify(event.target.userName.value);
-  userNamePopulated();
-}
+var isPlayerClicking = document.getElementById('isPlayerClicking');
 
 function Img(idNumber) {
   this.idNumber = idNumber;
@@ -146,7 +141,14 @@ function endGame() {
 
 function play(e) {
   e.preventDefault();
-  allPictures = [];
+  allPictures=[];
+  boardLocation = [];
+  clickStorage = [];
+  matchLocation = [];
+  wantToPlay.innerHTML='';
+  startGame.innerHTML='';
+  seeRegisteredScores.innerHTML='';
+  playAgain.innerHTML='';
   picIds();
   picIds();
   randomImages();
@@ -195,7 +197,6 @@ function checkScores() {
 /////////////////////////////////////////////////////////////////////////////////
 
 //Populate User Name
-
 //Check UserName on Main Page for blanks
 function userHandler(event) {
   event.preventDefault();
@@ -204,6 +205,7 @@ function userHandler(event) {
 }
 
 function userNamePopulated() {
+  userForm.innerHTML='';
   if (localStorage.userName && initialNameEntered === false) {
     var pEl = document.createElement('p');
     pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
@@ -225,26 +227,38 @@ function displayYesNoButtons() {
   noButton.appendChild(newButtonNo);
 }
 
-//provide game instructions, start button and call the timer function
+//start button and call the timer function
 function yesLetsPlay() {
-  var h3El = document.createElement('h3');
-  h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
-  wantToPlay.appendChild(h3El);
+  playGame.innerHTML='';
+  yesButton.innerHTML='';
+  noButton.innerHTML='';
+  var instructionButton = document.createElement('BUTTON');
+  instructionButton.textContent = 'See Instructions'
+  seeInstructions.appendChild(instructionButton);
+
 //start button
   var newButtonStartGame = document.createElement('BUTTON')
   newButtonStartGame.textContent = 'Start Game';
   startGame.appendChild(newButtonStartGame);
+
 }
+
+function seeInitialInstructions() {
+  var h3El = document.createElement('h3');
+  h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
+  wantToPlay.appendChild(h3El);
+  seeInstructions.innerHTML='';
+}
+
 
 //User doesn't want to play, they are transported to the Jokes page.
 function noLetsNotPlay() {
   document.location.href = 'jokes.html'; //this hooks into the Jokes Page
 }
 
-//This is for the overall elapsed time called when game is over
-
-
-// function clickMeAndWait() {
+function clickMeAndWait() {
+  setTimeout('alert(\'Surprise!\')', 5000);
+}
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // this code is to be used when we are waiting for the user to click on cards
 // When a visitor clicks the button, the setTimeout() method is called, passing in the expression that
@@ -257,6 +271,7 @@ function noLetsNotPlay() {
 //this displays the register your score button, otherwise we display the See Registered Scores button
 //both top ten and non-top ten will see the Play again button
 function registerYourScore(){
+  // e.preventDefault();
   if (topTen) {
     var newButtonRegisterYourScore = document.createElement('BUTTON')
     newButtonRegisterYourScore.textContent = 'Register Your Score?';
@@ -267,33 +282,36 @@ function registerYourScore(){
       var newButtonSeeRegisteredScores = document.createElement('BUTTON')
       newButtonSeeRegisteredScores.textContent = 'See Registered Scores';
       seeRegisteredScores.appendChild(newButtonSeeRegisteredScores);
-      wantToPlayAgain();
+      //wantToPlayAgain();
     }
   }
 }
 
 function playAgainButton() {
+  // e.preventDefault();
   var newButtonPlayAgain = document.createElement('BUTTON')
   newButtonPlayAgain.textContent = 'Play Again?';
   playAgain.appendChild(newButtonPlayAgain);
-  wantToPlayAgain();
+  //wantToPlayAgain();
 }
 
 function registerScorePage() {//placeholder for calling the registerScorePage
+  // e.preventDefault();
+  console.log('placeholder for registerScorePage function');
 }
 
 function wantToPlayAgain() {//placeholder for calling the function that refreshes the gameboard
   //display Play again button
 }
 
-
 //Event Listeners for Main Page
 userForm.addEventListener('submit', userHandler);
 yesButton.addEventListener('click',yesLetsPlay);
+seeInstructions.addEventListener('click',seeInitialInstructions);
 noButton.addEventListener('click',noLetsNotPlay);
 startGame.addEventListener('click', play);
 registerScore.addEventListener('click',registerScorePage);//topten
 seeRegisteredScores.addEventListener('click',registerScorePage);//non-top ten
-//playAgain.addEventListener('click',function that refreshes the game board);
-
+playAgain.addEventListener('click',play);
 gameBoard.addEventListener('click', clickFlip);
+isPlayerClicking.addEventListener('click',clickMeAndWait);
