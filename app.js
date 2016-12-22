@@ -7,7 +7,7 @@ var matchLocation = [];
 var subset = [];
 var gameBoard = document.getElementById('gameBoard');
 var startingTimeInMs;
-var boardSize = 18;
+var boardSize;
 var initialNameEntered = false;
 var isHighScore = false;//used to determine if the Register Your Score button should be displayed
 
@@ -89,6 +89,15 @@ function makeGameBoard() {
       putImagesOnBoard(tcEl, imgEl, trEl, gameBoard, i);
     }
   }
+}
+function hideGameOptions() {
+  document.getElementById('options').style.visibility = 'hidden';
+}
+
+hideGameOptions();
+
+function displayGameOptions() {
+  document.getElementById('options').style.visibility = 'visible';
 }
 
 ////////////////// VARIABLES USED FOR THE GAME CLICK FUNCTION /////////////////
@@ -274,6 +283,7 @@ function yesLetsPlay() {
   playGame.innerHTML='';
   yesButton.innerHTML='';
   noButton.innerHTML='';
+  displayGameOptions();
   newInstructionsButton();
 
 //start button
@@ -348,12 +358,19 @@ function hideInstructionsHandler(e) {
   newInstructionsButton();
 }
 
+function optionsHandler(e) {
+  e.preventDefault();
+  hideGameOptions();
+  boardSize = document.querySelector('input[name=size]:checked').value;
+}
+
 function buttHandler(e) { //remove after testing is complete;
   e.preventDefault();
   endGame();
   document.getElementById('tempButt').innerHTML = '';
 }
 //Event Listeners for Main Page
+document.getElementById('options').addEventListener('submit', optionsHandler);
 userForm.addEventListener('submit', userHandler);
 yesButton.addEventListener('click',yesLetsPlay);
 seeInstructions.addEventListener('click',seeInitialInstructions);
