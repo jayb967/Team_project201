@@ -351,6 +351,7 @@ function optionsHandler(e) {
   } else {
     boardSize = 18;
   }
+  localStorage.boardSize = JSON.stringify(boardSize);
 }
 
 function playAgainHandler(e) {
@@ -361,6 +362,7 @@ function playAgainHandler(e) {
   } else {
     boardSize = 18;
   }
+  localStorage.boardSize = JSON.stringify(boardSize);
 }
 
 function buttHandler(e) { //remove after testing is complete;
