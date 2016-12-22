@@ -10,15 +10,16 @@
 
 
 * {
-  font-family:sans-serif;
+  font-family: 'Arial', sans-serif;
   background-color: #96C0CE;
   color: #525564;
   /*border:2px solid green;*/
 }
-table {
 
+table {
   margin: 10%auto;
 }
+
 label {
   font-family: sans-serif;
   font-weight: bolder;
@@ -117,7 +118,7 @@ ul li{
 }
 li button {
   opacity:.5;
-  transition:opacity 0.3s linear;
+  transition: opacity 0.3s linear;
   font-family: sans-serif;
   font-weight: bolder;
   font-size: 20px;
@@ -131,8 +132,9 @@ li button {
     font-size: 40px;
 }
 
-table {
-  margin: auto;
+table{
+  margin-left: 50%;
+  margin-right: 50%;
   padding: 15px;
 }
 
@@ -271,32 +273,38 @@ p button {
   cursor: pointer;
   float: none;
 }
+
 #ready-to-play:hover {
   background: #888;
   color:black;
   transition: 0.3s;
   opacity: 2;
 }
+
 #display-button2:hover {
   /*background: #888;*/
   color:black;
   opacity: 2;
 }
+
 #userNameButton:hover {
   /*background: #888;*/
   color:black;
   opacity: 2;
 }
+
 li button:hover {
 
   color:black;
   opacity: 2;
 }
+
 h3 button:hover {
   /*background: #888;*/
   color:black;
   opacity: 2;
 }
+
 p button:hover {
   /*background: #888;*/
   color:black;
