@@ -4,16 +4,13 @@ var allPictures = [];
 var boardLocation = [];
 var clickStorage = [];
 var matchLocation = [];
+var subset = [];
 var gameBoard = document.getElementById('gameBoard');
 var startingTimeInMs;
-var userHandler;
-
-////// DIS THE IMAGE OBJECT MON ///////
-
+var boardSize;
 var initialNameEntered = false;
 var isHighScore = false;//used to determine if the Register Your Score button should be displayed
 
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++
 //DOM variables
 var userForm = document.getElementById('user-form'); //user name
 var playGame = document.getElementById('playGame');//want to play?
@@ -21,10 +18,8 @@ var yesButton = document.getElementById('yesButton');//yes to play
 var noButton = document.getElementById('noButton');//no to play
 var wantToPlay = document.getElementById('yesLetsPlay');//displays game instructions
 var seeInstructions = document.getElementById('seeInstructions');
-var startGame = document.getElementById('startGame');//starts Game & timer begins
 var registerScore = document.getElementById('registerScore');//top ten player registry
 var playAgain = document.getElementById('playAgain');//starts the game over
-var isPlayerClicking = document.getElementById('isPlayerClicking');
 
 function Img(idNumber) {
   this.idNumber = idNumber;
@@ -34,15 +29,30 @@ function Img(idNumber) {
   this.cardBack = 'img/card.png';
 }
 
+function randomizeSet() {
+  return Math.floor(Math.random() * 23);
+}
+
+function pickRandomSetOfImages() {
+  var tempId;
+  subset = [];
+  while (subset.length < boardSize) {
+    tempId = randomizeSet();
+    if (!subset.includes(tempId)) {
+      subset.push(tempId);
+    }
+  }
+}
+
 // All of our pic names are just numbers so we don't have to write out all of the individual pic IDS doppppeeeeeee
 function picIds() {
-  for (var i = 0; i < 8; i++) {
-    allPictures.push(new Img(i));
+  for (var i = 0; i < boardSize; i++) {
+    allPictures.push(new Img(subset[i]));
   }
 }
 
 function rand() {
-  return Math.floor(Math.random() * 16);
+  return Math.floor(Math.random() * (boardSize * 2));
 }
 
 function randomImages () {
@@ -52,7 +62,7 @@ function randomImages () {
       boardLocation.push(temp);
       allPictures[temp].boardLocation = boardLocation.length - 1;
     }
-  } while (boardLocation.length < 16);
+  } while (boardLocation.length < (boardSize * 2));
 }
 
 function putImagesOnBoard (tcEl, imgEl, trEl, gameBoard, i) {
@@ -70,7 +80,7 @@ function makeGameBoard() {
   var imgEl;
   var tcEl;
   for (var i = 0; i < boardLocation.length; i++) {
-    if (i % 4 === 0) {
+    if (i % (Math.sqrt(boardSize * 2)) === 0) {
       trEl = document.createElement('tr');
       putImagesOnBoard(tcEl, imgEl, trEl, gameBoard, i);
     } else {
@@ -78,7 +88,6 @@ function makeGameBoard() {
     }
   }
 }
-
 ////////////////// VARIABLES USED FOR THE GAME CLICK FUNCTION /////////////////
 
 function initializeMatchLocation () {
@@ -133,60 +142,81 @@ function endGame() {
   localStorage.newScore = JSON.stringify(Math.round(Math.floor(timeCalc * 100))); //need to round-up
   setTimeout(function () {
     gameBoard.innerHTML = '';
-    startGame.innerHTML = '';
     wantToPlay.innerHTML = '';
     checkScores();
-    playAgainButton();
+    playAgainButtons();
     registerYourScore();
-  }, 3000);
+  }, 2000);
 }
 
 function play(e) {
   e.preventDefault();
-  allPictures=[];
+  allPictures = [];
   boardLocation = [];
   clickStorage = [];
   matchLocation = [];
-  wantToPlay.innerHTML = '';
-  startGame.innerHTML = '';
+  document.getElementById('options').innerHTML = '';
   registerScore.innerHTML = '';
-  playAgain.innerHTML = '';
-  seeInstructions.innerHTML = '';
+  document.getElementById('playSame').innerHTML = '';
+  document.getElementById('playOther').innerHTML = '';
+  document.getElementById('afterGame').innerHTML = '';
+  pickRandomSetOfImages();
   picIds();
   picIds();
   randomImages();
   makeGameBoard();
   initializeMatchLocation();
   startingTimeInMs = Date.now();
-
+  //for testing purposes, this button allows user to skip game
+  var butt = document.createElement('button');
+  butt.textContent = 'FINISH GAME';
+  document.getElementById('tempButt').appendChild(butt);
 }
 
 function checkScores() {
   isHighScore = false;
   var highScores = [];
-  // var temphighScores = [];
+  var highScorers = [];
   var newScore = parseInt(JSON.parse(localStorage.getItem('newScore')));
-  function orderScores() {
-    highScores.sort(function(a, b){return a-b});
+  var userName = JSON.parse(localStorage.getItem('userName'));
+
+  function storeScores () {
+    localStorage.highScores = JSON.stringify(highScores);
+    localStorage.highScorers = JSON.stringify(highScorers);
   }
+
+  function placeForScore(score) {
+    return score >= newScore;
+  }
+
   if (localStorage.highScores) {
     highScores = JSON.parse(localStorage.getItem('highScores'));
-    if (parseInt(highScores[highScores.length - 1]) > newScore) {
-      console.log(highScores.length - 1);
-      console.log(parseInt(highScores[highScores.length - 1]));
+    highScorers = JSON.parse(localStorage.getItem('highScorers'));
+    if (parseInt(highScores[highScores.length - 1]) > newScore || highScores.length < 10) {
       isHighScore = true;
-      if (isHighScore) {
-        highScores.push(newScore);
-        orderScores();
-        if (highScores.length === 10) {
-          highScores.pop();
-        }
+      if (highScores.length === 10) {
+        highScores.pop();
+        highScorers.pop();
       }
+      var indexForNewHighScore = highScores.find(placeForScore);
+      console.log(indexForNewHighScore + ' num found in array');
+      indexForNewHighScore = highScores.indexOf(indexForNewHighScore);
+      console.log(indexForNewHighScore + ' index of above num found in array');
+      if (indexForNewHighScore !== -1) {
+        highScores.splice(indexForNewHighScore, 0, newScore);
+        highScorers.splice(indexForNewHighScore, 0, userName);
+      } else {
+        highScores.push(newScore);
+        highScorers.push(userName);
+      }
+      storeScores();
     }
   } else {
+    isHighScore = true;
     highScores.push(newScore);
+    highScorers.push(userName);
+    storeScores();
   }
-  localStorage.highScores = JSON.stringify(highScores);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -194,26 +224,24 @@ function checkScores() {
 //Populate User Name
 //Check UserName on Main Page for blanks
 if (localStorage.userName) {
-  console.log('in the if local storage user name');
   userForm.innerHTML='';
   var pEl = document.createElement('p');
-  pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
+  pEl.textContent = JSON.parse(localStorage.getItem('userName')) + ', would you like to play a game?';
   playGame.appendChild(pEl);
   displayYesNoButtons();
 }
 
 function userHandler(event) {
-    event.preventDefault();
-    localStorage.userName = JSON.stringify(event.target.userName.value);
-    userNamePopulated();
-  }
-
+  event.preventDefault();
+  localStorage.userName = JSON.stringify(event.target.userName.value);
+  userNamePopulated();
+}
 
 function userNamePopulated() {
   userForm.innerHTML='';
   if (localStorage.userName && initialNameEntered === false) {
     var pEl = document.createElement('p');
-    pEl.textContent = localStorage.userName + ' , do you want to play the memory game?';
+    pEl.textContent = JSON.parse(localStorage.getItem('userName')) + ', would you like to play a game?';
     playGame.appendChild(pEl);
     initialNameEntered = true;
     displayYesNoButtons();
@@ -224,28 +252,17 @@ function userNamePopulated() {
 function displayYesNoButtons() {
 //Yes button displayed
   var newButtonYes = document.createElement('BUTTON');
-  newButtonYes.textContent = 'Yes';
+  newButtonYes.textContent = 'YES';
   yesButton.appendChild(newButtonYes);
 //No button displayed
   var newButtonNo = document.createElement('BUTTON');
-  newButtonNo.textContent = 'No';
+  newButtonNo.textContent = 'NO';
   noButton.appendChild(newButtonNo);
 }
-
-//start button and call the timer function
-function yesLetsPlay() {
-  playGame.innerHTML='';
-  yesButton.innerHTML='';
-  noButton.innerHTML='';
+function newInstructionsButton () {
   var instructionButton = document.createElement('BUTTON');
-  instructionButton.textContent = 'See Instructions'
+  instructionButton.textContent = 'SEE GAME INSTRUCTIONS'
   seeInstructions.appendChild(instructionButton);
-
-//start button
-  var newButtonStartGame = document.createElement('BUTTON')
-  newButtonStartGame.textContent = 'Start Game';
-  startGame.appendChild(newButtonStartGame);
-
 }
 
 function seeInitialInstructions() {
@@ -253,28 +270,16 @@ function seeInitialInstructions() {
   h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
   wantToPlay.appendChild(h3El);
   seeInstructions.innerHTML='';
+  var hideInstructionsButton = document.createElement('button');
+  hideInstructionsButton.textContent = 'HIDE INSTRUCTIONS';
+  document.getElementById('hideInstructions').appendChild(hideInstructionsButton);
 }
-
 
 //User doesn't want to play, they are transported to the Jokes page.
 function noLetsNotPlay() {
   document.location.href = 'jokes.html'; //this hooks into the Jokes Page
 }
 
-function clickMeAndWait() {
-  setTimeout('alert(\'Surprise!\')', 5000);
-}
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++
-// this code is to be used when we are waiting for the user to click on cards
-// When a visitor clicks the button, the setTimeout() method is called, passing in the expression that
-// we want to run after the time delay, and the value of the time delay itself - 5,000 milliseconds or 5 seconds.
-// <input type="button" name="clickMe" value="Click me and wait!"  put it in the html
-// onclick="setTimeout('alert(\'Surprise!\')', 5000)"/>  I can put this in an eventhandler for the players clicks between cards
-// }
-
-//When the game is finished, for top ten winners, set topTen = true and gameOver or remove these variables and call this function.
-//this displays the register your score button, otherwise we display the See Registered Scores button
-//both top ten and non-top ten will see the Play again button
 function registerYourScore(){
   var newButtonRegisterYourScore = document.createElement('BUTTON')
   newButtonRegisterYourScore.textContent = 'SEE HIGH SCORES';
@@ -288,30 +293,76 @@ function registerYourScore(){
   }
   localStorage.newScore = '';
 }
-
-function playAgainButton() {
-  var h3El = document.createElement('h3');
-  h3El.textContent = 'Four rows of four cards placed facing down are displayed. Once the Start Game button is clicked the timer will begin and the user will have the ability to click on only two cards at a time. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  If the player qualifies within the top ten, they may register their score or they may play again. If they choose to register their score, they will be transported to the Top Scores Page. If they choose to Play Again the cards will be turned over, the timer reset and the player can begin clicking on cards.'
-  wantToPlay.appendChild(h3El);
-  var newButtonPlayAgain = document.createElement('BUTTON')
-  newButtonPlayAgain.textContent = 'PLAY AGAIN';
-  playAgain.appendChild(newButtonPlayAgain);
-  //wantToPlayAgain();
+function createOptionsButton(size, whereAppend) {
+  var newPlayButton = document.createElement('BUTTON')
+  newPlayButton.textContent = 'PLAY ' + size;
+  document.getElementById(whereAppend).appendChild(newPlayButton);
 }
 
+function yesLetsPlay() {
+  playGame.innerHTML='';
+  yesButton.innerHTML='';
+  noButton.innerHTML='';
+  createOptionsButton('4x4 BOARD', 'op1');
+  createOptionsButton('6x6 BOARD', 'op2')
+  newInstructionsButton();
+}
+
+function playAgainButtons() {
+  var tempSize;
+  var tempNewSize;
+  if (boardSize === 8) {
+    tempSize = '4x4 BOARD AGAIN';
+    tempNewSize = '6x6 INSTEAD'
+  } else {
+    tempSize = '6x6 BOARD AGAIN';
+    tempNewSize = '4x4 INSTEAD';
+  }
+  createOptionsButton(tempSize, 'playSame');
+  createOptionsButton(tempNewSize, 'playOther');
+  document.getElementById('afterGame').innerHTML = '';
+
+}
 
 function registerScorePage(e) {//placeholder for calling the registerScorePage
   e.preventDefault();
+  document.getElementById('afterGame').textContent = '';
   document.location.href = 'scores.html';
 }
 
+function hideInstructionsHandler(e) {
+  e.preventDefault();
+  document.getElementById('hideInstructions').innerHTML = '';
+  wantToPlay.innerHTML = '';
+  newInstructionsButton();
+}
+
+function optionsHandler(e) {
+  e.preventDefault();
+  var tempSize = event.target.innerText;
+  document.getElementById('options').innerHTML = '';
+  if (tempSize.charAt(5) === '4') {
+    boardSize = 8;
+  } else {
+    boardSize = 18;
+  }
+}
+
+function buttHandler(e) { //remove after testing is complete;
+  e.preventDefault();
+  endGame();
+  document.getElementById('tempButt').innerHTML = '';
+}
 //Event Listeners for Main Page
+document.getElementById('options').addEventListener('click', optionsHandler);
+document.getElementById('options').addEventListener('click', play);
 userForm.addEventListener('submit', userHandler);
 yesButton.addEventListener('click',yesLetsPlay);
 seeInstructions.addEventListener('click',seeInitialInstructions);
 noButton.addEventListener('click',noLetsNotPlay);
-startGame.addEventListener('click', play);
 registerScore.addEventListener('click',registerScorePage);//topten
-playAgain.addEventListener('click',play);
+document.getElementById('playSame').addEventListener('click', play);
+document.getElementById('playOther').addEventListener('click', play);
 gameBoard.addEventListener('click', clickFlip);
-isPlayerClicking.addEventListener('click',clickMeAndWait);
+document.getElementById('tempButt').addEventListener('click', buttHandler);
+document.getElementById('hideInstructions').addEventListener('click', hideInstructionsHandler); //remove aftr testing is complete
