@@ -1,7 +1,26 @@
+* {
+  font-family:sans-serif;
+  background-color: #96C0CE;
+  color: #525564;
+  /*border:2px solid green;*/
+}
+
 h1 {
   text-align: center;
-  padding: 30px:
+  padding: 30px;
 }
+
+h2 {
+  padding: 30px;
+  font-weight: bold;
+}
+
+#scoresh2 {
+  text-align:center;
+  font-weight: bold;
+  font-size: 25px;
+}
+
 
 #tableScores {
   margin-left: auto;
