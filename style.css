@@ -122,7 +122,8 @@ li button {
   font-weight: bolder;
   font-size: 20px;
   border-radius: 40px;
-=======
+}
+
 #team-member-page {
     margin: 40px;
     text-align:center;
@@ -300,6 +301,8 @@ p button:hover {
   /*background: #888;*/
   color:black;
   opacity: 2;
+}
+
 
 #gameBoard {
   margin-left: auto;
