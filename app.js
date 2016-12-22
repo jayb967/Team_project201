@@ -19,7 +19,6 @@ var noButton = document.getElementById('noButton');//no to play
 var wantToPlay = document.getElementById('yesLetsPlay');//displays game instructions
 var seeInstructions = document.getElementById('seeInstructions');
 var registerScore = document.getElementById('registerScore');//top ten player registry
-var playAgain = document.getElementById('playAgain');//starts the game over
 
 function Img(idNumber) {
   this.idNumber = idNumber;
@@ -261,7 +260,7 @@ function displayYesNoButtons() {
 }
 function newInstructionsButton () {
   var instructionButton = document.createElement('BUTTON');
-  instructionButton.textContent = 'SEE GAME INSTRUCTIONS'
+  instructionButton.textContent = 'SEE GAME INSTRUCTIONS';
   seeInstructions.appendChild(instructionButton);
 }
 
@@ -281,7 +280,7 @@ function noLetsNotPlay() {
 }
 
 function registerYourScore(){
-  var newButtonRegisterYourScore = document.createElement('BUTTON')
+  var newButtonRegisterYourScore = document.createElement('BUTTON');
   newButtonRegisterYourScore.textContent = 'SEE HIGH SCORES';
   registerScore.appendChild(newButtonRegisterYourScore);
 
@@ -294,7 +293,7 @@ function registerYourScore(){
   localStorage.newScore = '';
 }
 function createOptionsButton(size, whereAppend) {
-  var newPlayButton = document.createElement('BUTTON')
+  var newPlayButton = document.createElement('BUTTON');
   newPlayButton.textContent = 'PLAY ' + size;
   document.getElementById(whereAppend).appendChild(newPlayButton);
 }
@@ -304,7 +303,7 @@ function yesLetsPlay() {
   yesButton.innerHTML='';
   noButton.innerHTML='';
   createOptionsButton('4x4 BOARD', 'op1');
-  createOptionsButton('6x6 BOARD', 'op2')
+  createOptionsButton('6x6 BOARD', 'op2');
   newInstructionsButton();
 }
 
