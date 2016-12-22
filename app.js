@@ -19,7 +19,6 @@ var noButton = document.getElementById('noButton');//no to play
 var wantToPlay = document.getElementById('yesLetsPlay');//displays game instructions
 var seeInstructions = document.getElementById('seeInstructions');
 var registerScore = document.getElementById('registerScore');//top ten player registry
-var playAgain = document.getElementById('playAgain');//starts the game over
 
 function Img(idNumber) {
   this.idNumber = idNumber;
@@ -142,8 +141,11 @@ function endGame() {
   localStorage.newScore = JSON.stringify(Math.round(Math.floor(timeCalc * 100))); //need to round-up
   setTimeout(function () {
     gameBoard.innerHTML = '';
-    wantToPlay.innerHTML = '';
-    checkScores();
+    if (boardSize === 8) {
+      checkScores('highScores4', 'highScorers4');
+    } else {
+      checkScores('highScores6', 'highScorers6');
+    }
     playAgainButtons();
     registerYourScore();
   }, 2000);
@@ -173,7 +175,7 @@ function play(e) {
   document.getElementById('tempButt').appendChild(butt);
 }
 
-function checkScores() {
+function checkScores(whichSizeScores, whichSizeScorers) {
   isHighScore = false;
   var highScores = [];
   var highScorers = [];
@@ -181,17 +183,22 @@ function checkScores() {
   var userName = JSON.parse(localStorage.getItem('userName'));
 
   function storeScores () {
-    localStorage.highScores = JSON.stringify(highScores);
-    localStorage.highScorers = JSON.stringify(highScorers);
+    if (boardSize === 8) {
+      localStorage.highScores4 = JSON.stringify(highScores);
+      localStorage.highScorers4 = JSON.stringify(highScorers);
+    } else {
+      localStorage.highScores6 = JSON.stringify(highScores);
+      localStorage.highScorers6 = JSON.stringify(highScorers);
+    }
   }
 
   function placeForScore(score) {
     return score >= newScore;
   }
 
-  if (localStorage.highScores) {
-    highScores = JSON.parse(localStorage.getItem('highScores'));
-    highScorers = JSON.parse(localStorage.getItem('highScorers'));
+  if ((boardSize === 8 && localStorage.highScores4) || (boardSize === 18 && localStorage.highScores6)) {
+    highScores = JSON.parse(localStorage.getItem(whichSizeScores));
+    highScorers = JSON.parse(localStorage.getItem(whichSizeScorers));
     if (parseInt(highScores[highScores.length - 1]) > newScore || highScores.length < 10) {
       isHighScore = true;
       if (highScores.length === 10) {
@@ -199,9 +206,7 @@ function checkScores() {
         highScorers.pop();
       }
       var indexForNewHighScore = highScores.find(placeForScore);
-      console.log(indexForNewHighScore + ' num found in array');
       indexForNewHighScore = highScores.indexOf(indexForNewHighScore);
-      console.log(indexForNewHighScore + ' index of above num found in array');
       if (indexForNewHighScore !== -1) {
         highScores.splice(indexForNewHighScore, 0, newScore);
         highScorers.splice(indexForNewHighScore, 0, userName);
@@ -348,6 +353,16 @@ function optionsHandler(e) {
   }
 }
 
+function playAgainHandler(e) {
+  e.preventDefault();
+  var tempSize = event.target.innerText;
+  if (tempSize.charAt(5) === '4') {
+    boardSize = 8;
+  } else {
+    boardSize = 18;
+  }
+}
+
 function buttHandler(e) { //remove after testing is complete;
   e.preventDefault();
   endGame();
@@ -361,8 +376,10 @@ yesButton.addEventListener('click',yesLetsPlay);
 seeInstructions.addEventListener('click',seeInitialInstructions);
 noButton.addEventListener('click',noLetsNotPlay);
 registerScore.addEventListener('click',registerScorePage);//topten
+document.getElementById('playSame').addEventListener('click', playAgainHandler);
 document.getElementById('playSame').addEventListener('click', play);
+document.getElementById('playOther').addEventListener('click', playAgainHandler);
 document.getElementById('playOther').addEventListener('click', play);
 gameBoard.addEventListener('click', clickFlip);
-document.getElementById('tempButt').addEventListener('click', buttHandler);
-document.getElementById('hideInstructions').addEventListener('click', hideInstructionsHandler); //remove aftr testing is complete
+document.getElementById('tempButt').addEventListener('click', buttHandler);//remove aftr testing is complete
+document.getElementById('hideInstructions').addEventListener('click', hideInstructionsHandler)
