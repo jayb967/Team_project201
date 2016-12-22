@@ -4,6 +4,7 @@ var allPictures = [];
 var boardLocation = [];
 var clickStorage = [];
 var matchLocation = [];
+var subset = [];
 var gameBoard = document.getElementById('gameBoard');
 var startingTimeInMs;
 
@@ -33,10 +34,25 @@ function Img(idNumber) {
   this.cardBack = 'img/card.png';
 }
 
+function randomizeSet() {
+  return Math.floor(Math.random() * 23);
+}
+
+function pickRandomSetOfImages() {
+  var tempId;
+  subset = [];
+  while (subset.length < 8) {
+    tempId = randomizeSet();
+    if (!subset.includes(tempId)) {
+      subset.push(tempId);
+    }
+  }
+}
+
 // All of our pic names are just numbers so we don't have to write out all of the individual pic IDS doppppeeeeeee
 function picIds() {
   for (var i = 0; i < 8; i++) {
-    allPictures.push(new Img(i));
+    allPictures.push(new Img(subset[i]));
   }
 }
 
@@ -142,16 +158,15 @@ function endGame() {
 
 function play(e) {
   e.preventDefault();
-  allPictures=[];
+  allPictures = [];
   boardLocation = [];
   clickStorage = [];
   matchLocation = [];
-  wantToPlay.innerHTML = '';
   startGame.innerHTML = '';
   registerScore.innerHTML = '';
   playAgain.innerHTML = '';
-  // seeInstructions.innerHTML = '';
   document.getElementById('afterGame').innerHTML = '';
+  pickRandomSetOfImages();
   picIds();
   picIds();
   randomImages();
