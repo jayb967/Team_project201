@@ -1,7 +1,26 @@
+* {
+  font-family:sans-serif;
+  background-color: #96C0CE;
+  color: #525564;
+  /*border:2px solid green;*/
+}
+
 h1 {
   text-align: center;
-  padding: 30px:
+  padding: 30px;
 }
+
+h2 {
+  padding: 30px;
+  font-weight: bold;
+}
+
+#scoresh2 {
+  text-align:center;
+  font-weight: bold;
+  font-size: 25px;
+}
+
 
 #tableScores {
   margin-left: auto;
@@ -22,6 +41,7 @@ td {
   background-color: #FFD700;
 }
 
+/*
 .container{
 	width: 40%;
 	height: 40%;
@@ -30,14 +50,14 @@ td {
 	overflow:hidden;
 }
 
-/*.planet{
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background:url(http://demo.tutorialzine.com/2013/10/css3-features-you-can-finally-use/assets/img/planet.png) no-repeat center center;
-}*/
+  .planet{
+  	position:absolute;
+  	top:0;
+  	left:0;
+  	width:100%;
+  	height:100%;
+  	background:url(http://demo.tutorialzine.com/2013/10/css3-features-you-can-finally-use/assets/img/planet.png) no-repeat center center;
+  }
 
 .rocket{
 	position:absolute;
@@ -82,4 +102,4 @@ td {
 		transform:rotate(360deg);
 		-webkit-transform:rotate(360deg);
 	}
-}
+}*/
