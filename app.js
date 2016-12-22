@@ -10,7 +10,7 @@ var startingTimeInMs;
 ////// DIS THE IMAGE OBJECT MON ///////
 
 var initialNameEntered = false;
-var topTen = false;//used to determine if the Register Your Score button should be displayed
+var isHighScore = false;//used to determine if the Register Your Score button should be displayed
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 //DOM variables
@@ -23,7 +23,6 @@ var seeInstructions = document.getElementById('seeInstructions');
 var startGame = document.getElementById('startGame');//starts Game & timer begins
 var registerScore = document.getElementById('registerScore');//top ten player registry
 var playAgain = document.getElementById('playAgain');//starts the game over
-var seeRegisteredScores = document.getElementById('seeRegisteredScores');//goes to the scores page
 var isPlayerClicking = document.getElementById('isPlayerClicking');
 
 function Img(idNumber) {
@@ -131,12 +130,14 @@ function endGame() {
   var endingTimeInMS = Date.now();
   var timeCalc = (endingTimeInMS - startingTimeInMs) / 60000;
   localStorage.newScore = JSON.stringify(Math.round(Math.floor(timeCalc * 100))); //need to round-up
-  gameBoard.innerHTML = '';
-  startGame.innerHTML = '';
-  wantToPlay.innerHTML = '';
-  checkScores();
-  playAgainButton();
-  registerYourScore();
+  setTimeout(function () {
+    gameBoard.innerHTML = '';
+    startGame.innerHTML = '';
+    wantToPlay.innerHTML = '';
+    checkScores();
+    playAgainButton();
+    registerYourScore();
+  }, 3000);
 }
 
 function play(e) {
@@ -145,10 +146,11 @@ function play(e) {
   boardLocation = [];
   clickStorage = [];
   matchLocation = [];
-  wantToPlay.innerHTML='';
-  startGame.innerHTML='';
-  seeRegisteredScores.innerHTML='';
-  playAgain.innerHTML='';
+  wantToPlay.innerHTML = '';
+  startGame.innerHTML = '';
+  registerScore.innerHTML = '';
+  playAgain.innerHTML = '';
+  seeInstructions.innerHTML = '';
   picIds();
   picIds();
   randomImages();
@@ -159,7 +161,7 @@ function play(e) {
 }
 
 function checkScores() {
-  var isHighScore = false;
+  isHighScore = false;
   var highScores = [];
   // var temphighScores = [];
   var newScore = parseInt(JSON.parse(localStorage.getItem('newScore')));
@@ -167,30 +169,22 @@ function checkScores() {
     highScores.sort(function(a, b){return a-b});
   }
   if (localStorage.highScores) {
-    // temphighScores.push(JSON.stringify(localStorage.highScores));
-    //  tempAppearances = JSON.parse(localStorage.getItem('totalAppearances'));
-    // highScores = temphighScores.map(Number);
     highScores = JSON.parse(localStorage.getItem('highScores'));
-    for (var i = 0; i < highScores.length; i++) {
-      if (parseInt(highScores[i]) < newScore) {
-        isHighScore = true;
-      }
-    }
-    if (!isHighScore && i < highScores.length) {
+    if (parseInt(highScores[highScores.length - 1]) > newScore) {
+      console.log(highScores.length - 1);
+      console.log(parseInt(highScores[highScores.length - 1]));
       isHighScore = true;
-    }
-    if (isHighScore) {
-      highScores.push(newScore);
-      if (highScores.length > 10) {
-        highScores.pop();
+      if (isHighScore) {
+        highScores.push(newScore);
+        orderScores();
+        if (highScores.length === 10) {
+          highScores.pop();
+        }
       }
-      orderScores();
-      console.log('high scores after sort' , highScores);
     }
   } else {
     highScores.push(newScore);
   }
-  localStorage.newScore = '';
   localStorage.highScores = JSON.stringify(highScores);
 }
 
@@ -271,37 +265,30 @@ function clickMeAndWait() {
 //this displays the register your score button, otherwise we display the See Registered Scores button
 //both top ten and non-top ten will see the Play again button
 function registerYourScore(){
-  // e.preventDefault();
-  if (topTen) {
-    var newButtonRegisterYourScore = document.createElement('BUTTON')
-    newButtonRegisterYourScore.textContent = 'Register Your Score?';
-    registerScore.appendChild(newButtonRegisterYourScore);
+  var newButtonRegisterYourScore = document.createElement('BUTTON')
+  newButtonRegisterYourScore.textContent = 'SEE HIGH SCORES';
+  registerScore.appendChild(newButtonRegisterYourScore);
+
+  if (isHighScore) {
+    document.getElementById('afterGame').textContent = 'Way to go, ' + JSON.parse(localStorage.getItem('userName')) + '! ' + 'Your time of ' + JSON.parse(localStorage.getItem('newScore')) + ' seconds is in the top ten high scores!';
   }
   else {
-    if (!topTen) {//display See Registered Scores for those not in the top ten
-      var newButtonSeeRegisteredScores = document.createElement('BUTTON')
-      newButtonSeeRegisteredScores.textContent = 'See Registered Scores';
-      seeRegisteredScores.appendChild(newButtonSeeRegisteredScores);
-      //wantToPlayAgain();
-    }
+    document.getElementById('afterGame').textContent = 'Way to go, ' + JSON.parse(localStorage.getItem('userName')) + '! ' + 'You finished the game in ' + JSON.parse(localStorage.getItem('newScore')) + ' seconds!';
   }
+  localStorage.newScore = '';
 }
 
 function playAgainButton() {
   // e.preventDefault();
   var newButtonPlayAgain = document.createElement('BUTTON')
-  newButtonPlayAgain.textContent = 'Play Again?';
+  newButtonPlayAgain.textContent = 'PLAY AGAIN';
   playAgain.appendChild(newButtonPlayAgain);
   //wantToPlayAgain();
 }
 
-function registerScorePage() {//placeholder for calling the registerScorePage
-  // e.preventDefault();
-  console.log('placeholder for registerScorePage function');
-}
-
-function wantToPlayAgain() {//placeholder for calling the function that refreshes the gameboard
-  //display Play again button
+function registerScorePage(e) {//placeholder for calling the registerScorePage
+  e.preventDefault();
+  document.location.href = 'scores.html';
 }
 
 //Event Listeners for Main Page
@@ -311,7 +298,6 @@ seeInstructions.addEventListener('click',seeInitialInstructions);
 noButton.addEventListener('click',noLetsNotPlay);
 startGame.addEventListener('click', play);
 registerScore.addEventListener('click',registerScorePage);//topten
-seeRegisteredScores.addEventListener('click',registerScorePage);//non-top ten
 playAgain.addEventListener('click',play);
 gameBoard.addEventListener('click', clickFlip);
 isPlayerClicking.addEventListener('click',clickMeAndWait);
