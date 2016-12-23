@@ -53,6 +53,7 @@ animation: fadeIn 2s;
 }
 fieldset {
   animation: fadeIn 3s;
+  border: none;
 }
 
 #user-name {
@@ -75,6 +76,7 @@ section p button {
   margin-right: 5px;
   margin-top: 2%;
 }
+
 section .endGameButtons{
   animation: fadeIn 3s;
     color: black;
@@ -149,7 +151,7 @@ ul li{
   font-size: 35px;
 }
 li button {
-  opacity:.5;
+  opacity:.7;
   transition: opacity 0.3s linear;
   font-family: sans-serif;
   font-weight: bolder;
@@ -206,7 +208,7 @@ li button {
 
 
 #userNameButton {
-  opacity:.5;
+  opacity:.7;
   transition:opacity 0.3s linear;
   font-family: sans-serif;
   font-weight: bolder;
@@ -222,7 +224,7 @@ li button {
   float: none;
 }
 #display-button2 {
-  opacity:.5;
+  opacity:.7;
   transition:opacity .2s linear;
   font-family: sans-serif;
   font-weight: bolder;
@@ -263,7 +265,7 @@ li button {
   float: none;
 }
 h3 button {
-  opacity:0.6;
+  opacity:0.7;
   transition:opacity .3s linear;
   font-family: sans-serif;
   font-weight: bolder;
@@ -284,7 +286,7 @@ h3 button {
 }
 
 p button {
-  opacity:0.6;
+  opacity:0.7;
   transition:opacity .3s linear;
   font-family: sans-serif;
   font-weight: bolder;
@@ -356,9 +358,16 @@ p button:hover {
   opacity: 2;
 }
 
+#gameBoard td:hover {
+  cursor: pointer;
+  border-color: #C25B56;
+  box-shadow: 0 0 20px black;
+}
+
 #gameBoard {
   margin-left: auto;
   margin-right: auto;
+  border-spacing: 0;
   clear: both;
 }
 #jokes {
@@ -378,7 +387,6 @@ div p {
 .options p {
   display: block;
   clear: both;
-  margin: 0 auto;
 }
 
 h3 {
@@ -386,4 +394,20 @@ h3 {
   font-size: 36px;
   margin-top: 80px;
   margin-bottom: 80px;
+}
+
+h4 {
+  font-size: 22px;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: #FEF6EB;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+hr.styled {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
