@@ -302,7 +302,7 @@ p button {
   float: none;
 }
 
-button {
+/*button {
   opacity:0.6;
   transition:opacity .3s linear;
   font-family: sans-serif;
@@ -317,7 +317,7 @@ button {
   margin-left: 0 auto;
   margin-bottom: 30px;
   cursor: pointer;
-}
+}*/
 
 
 #ready-to-play:hover {
@@ -367,4 +367,10 @@ p button:hover {
 img {
   height: 150px;
   width: 150px;
+}
+
+div p {
+  text-align: center;
+  font-size: 32px;
+  margin-top: 50px;
 }

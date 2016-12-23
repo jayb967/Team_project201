@@ -170,10 +170,6 @@ function play(e) {
   makeGameBoard();
   initializeMatchLocation();
   startingTimeInMs = Date.now();
-  //for testing purposes, this button allows user to skip game
-  var butt = document.createElement('button');
-  butt.textContent = 'FINISH GAME';
-  document.getElementById('tempButt').appendChild(butt);
 }
 
 function checkScores(whichSizeScores, whichSizeScorers) {
@@ -367,11 +363,6 @@ function playAgainHandler(e) {
   localStorage.boardSize = JSON.stringify(boardSize);
 }
 
-function buttHandler(e) { //remove after testing is complete;
-  e.preventDefault();
-  endGame();
-  document.getElementById('tempButt').innerHTML = '';
-}
 //Event Listeners for Main Page
 document.getElementById('op1').addEventListener('click', optionsHandler);
 document.getElementById('op2').addEventListener('click', optionsHandler);
@@ -387,5 +378,4 @@ document.getElementById('playSame').addEventListener('click', play);
 document.getElementById('playOther').addEventListener('click', playAgainHandler);
 document.getElementById('playOther').addEventListener('click', play);
 gameBoard.addEventListener('click', clickFlip);
-document.getElementById('tempButt').addEventListener('click', buttHandler);//remove aftr testing is complete
-document.getElementById('hideInstructions').addEventListener('click', hideInstructionsHandler)
+document.getElementById('hideInstructions').addEventListener('click', hideInstructionsHandler);
