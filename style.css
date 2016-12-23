@@ -168,8 +168,7 @@ li button {
 }
 
 #aboutUs{
-  margin-left: 50%;
-  margin-right: 50%;
+  margin: 0 auto;
   padding: 15px;
 }
 
@@ -302,7 +301,7 @@ p button {
   float: none;
 }
 
-button {
+/*button {
   opacity:0.6;
   transition:opacity .3s linear;
   font-family: sans-serif;
@@ -317,7 +316,7 @@ button {
   margin-left: 0 auto;
   margin-bottom: 30px;
   cursor: pointer;
-}
+}*/
 
 
 #ready-to-play:hover {
@@ -360,6 +359,7 @@ p button:hover {
 #gameBoard {
   margin-left: auto;
   margin-right: auto;
+  clear: both;
 }
 #jokes {
   text-align: center;
@@ -367,4 +367,23 @@ p button:hover {
 img {
   height: 150px;
   width: 150px;
+}
+
+div p {
+  text-align: center;
+  font-size: 32px;
+  margin-top: 50px;
+}
+
+.options p {
+  display: block;
+  clear: both;
+  margin: 0 auto;
+}
+
+h3 {
+  text-align: center;
+  font-size: 36px;
+  margin-top: 80px;
+  margin-bottom: 80px;
 }
