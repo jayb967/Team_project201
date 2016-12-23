@@ -157,7 +157,8 @@ function play(e) {
   boardLocation = [];
   clickStorage = [];
   matchLocation = [];
-  document.getElementById('options').innerHTML = '';
+  // document.getElementById('op1').innerHTML = '';
+  // document.getElementById('op2').innerHTML = '';
   registerScore.innerHTML = '';
   document.getElementById('playSame').innerHTML = '';
   document.getElementById('playOther').innerHTML = '';
@@ -345,7 +346,8 @@ function hideInstructionsHandler(e) {
 function optionsHandler(e) {
   e.preventDefault();
   var tempSize = event.target.innerText;
-  document.getElementById('options').innerHTML = '';
+  document.getElementById('op1').innerHTML = '';
+  document.getElementById('op2').innerHTML = '';
   if (tempSize.charAt(5) === '4') {
     boardSize = 8;
   } else {
@@ -371,8 +373,10 @@ function buttHandler(e) { //remove after testing is complete;
   document.getElementById('tempButt').innerHTML = '';
 }
 //Event Listeners for Main Page
-document.getElementById('options').addEventListener('click', optionsHandler);
-document.getElementById('options').addEventListener('click', play);
+document.getElementById('op1').addEventListener('click', optionsHandler);
+document.getElementById('op2').addEventListener('click', optionsHandler);
+document.getElementById('op1').addEventListener('click', play);
+document.getElementById('op2').addEventListener('click', play);
 userForm.addEventListener('submit', userHandler);
 yesButton.addEventListener('click',yesLetsPlay);
 seeInstructions.addEventListener('click',seeInitialInstructions);
