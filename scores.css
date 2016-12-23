@@ -41,6 +41,25 @@ td {
   background-color: #FFD700;
 }
 
+div button {
+  width: 300px;
+  opacity:0.6;
+  transition:opacity .3s linear;
+  font-family: sans-serif;
+  font-weight: bolder;
+  font-size: 30px;
+  border-radius: 35px;
+  border: none;
+  color: black;
+  background-color: #B33E3E;
+  padding: 10px 15px;
+  margin-top: 5%;
+  margin-left: 50%;
+  margin-right: 50%;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
 /*
 .container{
 	width: 40%;
