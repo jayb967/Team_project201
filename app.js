@@ -268,7 +268,7 @@ function newInstructionsButton () {
 }
 
 function seeInitialInstructions() {
-  var h3El = document.createElement('h3');
+  var h3El = document.createElement('h4');
   h3El.textContent = 'The game starts with rows of cards all facing down. Once you click one of the play buttons, an invisible timer will start. You turn cards over by clicking on them, revealing two cards per round. If a match occurs the cards will remain facing up.  If a match doesn’t occur the cards will automatically be turned face down.  Repeat this process until you have matched all the pairs. Good luck!';
   wantToPlay.appendChild(h3El);
   seeInstructions.innerHTML='';
