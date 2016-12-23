@@ -168,8 +168,7 @@ li button {
 }
 
 #aboutUs{
-  margin-left: 50%;
-  margin-right: 50%;
+  margin: 0 auto;
   padding: 15px;
 }
 
@@ -360,6 +359,7 @@ p button:hover {
 #gameBoard {
   margin-left: auto;
   margin-right: auto;
+  clear: both;
 }
 #jokes {
   text-align: center;
@@ -373,4 +373,17 @@ div p {
   text-align: center;
   font-size: 32px;
   margin-top: 50px;
+}
+
+.options p {
+  display: block;
+  clear: both;
+  margin: 0 auto;
+}
+
+h3 {
+  text-align: center;
+  font-size: 36px;
+  margin-top: 80px;
+  margin-bottom: 80px;
 }
